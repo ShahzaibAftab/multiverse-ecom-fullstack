@@ -1,0 +1,25 @@
+///PRODUCT///
+productName
+productImg
+-img
+price
+rating
+description
+comments
+-name
+-feedback
+-rating
+
+///ORDER///
+customerName
+contact
+emailAddress
+postalCode
+city
+province
+address
+paymentMode
+total
+products
+    - Name
+    - quantity

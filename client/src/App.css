@@ -1,0 +1,223 @@
+@import url("https://fonts.googleapis.com/css2?family=Agbalumo&family=Merriweather+Sans&family=Merriweather:ital,wght@0,700;1,400&family=Nunito:wght@200&family=Oswald:wght@300;400;500&family=Roboto:wght@400;500&family=Ubuntu&display=swap");
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "roboto";
+}
+.qcom-logo {
+  height: 200px;
+  width: 200px;
+  background-repeat: no-repeat;
+  margin-bottom: 50px;
+}
+/* ADD-TO-CART */
+.right-cart-section {
+  position: absolute;
+  right: 3%;
+  bottom: 50%;
+}
+.cart-container {
+  position: relative;
+}
+.cart-icon {
+  margin-right: 15px;
+  font-size: 25px;
+}
+.cart-content {
+  position: absolute;
+  top: 0;
+  right: 0;
+  background-color: brown;
+  color: white;
+  font-weight: bold;
+  border-radius: 60%;
+  padding-inline: 6px;
+}
+.cart-container:hover .cart-content {
+  display: block;
+}
+/* CAROUSEL */
+.slider-size {
+  height: 400px;
+  object-fit: cover;
+}
+.carousel-item {
+  transition: opacity 1.2s ease-in-out; /* Add a smooth fade transition effect */
+}
+
+/* PRODUCTCARD.JSX */
+.card-img {
+  border-radius: 50%;
+  height: 150px;
+  width: 150px;
+  transition: transform 0.3s ease-in-out;
+  cursor: pointer;
+}
+/* .card-img {
+  width: 100%;
+  height: auto;
+  /* Add a smooth transition effect */
+/* } */
+
+.card-img:hover {
+  transform: scale(1.1); /* Zoom in on hover */
+}
+.card-text {
+  cursor: pointer;
+}
+.card-text:hover {
+  text-decoration: underline;
+}
+/* BENEFITS.JS */
+.tab-container {
+  border: 1px solid #f4f5f7;
+  padding: 40px 80px;
+  background-color: #f4f5f7;
+  color: #4c8cf5;
+}
+.benefit-subcontainer {
+  display: flex;
+  justify-content: space-between;
+}
+.benefit-icon {
+  font-size: 50px;
+  padding-bottom: 10px;
+  color: #146cf8;
+}
+.benefit-title {
+  margin-top: 10px;
+  margin: auto;
+  font-size: 20px;
+  font-weight: 600;
+}
+.benefit-text {
+  margin-inline: auto;
+}
+/* PRODUCTCARD.JSX */
+.product-img {
+  height: 200px;
+  width: 200px;
+  transition: transform 0.3s ease-in-out;
+  cursor: pointer;
+}
+.product-img:hover {
+  transform: scale(1.1);
+}
+.hot-tag {
+  position: absolute;
+  top: 10px;
+  left: 65%;
+  background-color: red; /* Customize the background color */
+  color: white; /* Customize the text color */
+  padding: 5px 10px;
+  border-radius: 5px;
+  font-weight: bold;
+}
+.hot-tag:hover {
+  background-color: rgb(216, 4, 4);
+  cursor: pointer;
+}
+.view-icon {
+  position: absolute;
+  left: 20%;
+  bottom: 52%;
+  background-color: rgb(85, 119, 228);
+  color: #f4f5f7;
+  padding: 1px 5px;
+  cursor: pointer;
+  border-radius: 5px;
+  transition: 0.5s;
+}
+.view-icon:hover {
+  background-color: rgb(40, 81, 216);
+}
+.card-flex {
+  display: flex;
+  cursor: pointer;
+}
+.product-hover-img {
+  height: 100px;
+  width: 100px;
+}
+.small-text {
+  font-size: small;
+}
+.card-hover-text {
+  font-size: medium;
+}
+.product-hover-price {
+  position: absolute;
+  right: 5%;
+}
+/* CATEGORYBLOCK.JSX */
+.block-border {
+  border-radius: 12px;
+  transition: transform 0.3s ease-in-out;
+  cursor: pointer;
+  background: linear-gradient(
+    109.6deg,
+    rgb(120, 212, 234) 11.2%,
+    rgb(216, 226, 253) 72.1%
+  );
+}
+.block-border:hover {
+  transform: scale(0.9);
+}
+.block-border-2 {
+  border-radius: 12px;
+  transition: transform 0.3s ease-in-out;
+  cursor: pointer;
+  background: linear-gradient(
+    109.6deg,
+    rgb(220, 196, 252) 11.2%,
+    rgb(150, 199, 253) 100.2%
+  );
+}
+.block-border-2:hover {
+  transform: scale(0.9);
+}
+.category-img-2 {
+  margin-top: 20px;
+  height: 170px;
+  width: 170px;
+}
+.block-parent {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* FOOTER.JSX */
+.bg-footer {
+  background-color: rgb(231, 231, 231);
+}
+/* HOMEPAGE.JSX */
+.product-container {
+  display: flex;
+  transition: transform 0.5s ease; /* Add a transition for smooth sliding */
+}
+
+.arrow {
+  cursor: pointer;
+  margin: 0 10px;
+}
+
+#leftArrow {
+  order: 0; /* Change the order to control the position of the left arrow */
+}
+
+#rightArrow {
+  order: 3; /* Change the order to control the position of the right arrow */
+}
+
+.product-slider {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden; /* Ensure hidden overflow to hide the remaining products */
+}
+/* PRODUCT.JSX */
+.round-border{
+  border-radius: 20px;
+}
