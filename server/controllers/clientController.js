@@ -80,6 +80,7 @@ const clientController = {
     try {
       // FIRST VALIDATE ObjectId, STORE DATA AGAINST, DELETE DATA AGAINST ID AND DELETE CLOUDINARY IMAGE
       const _id = req.params.id;
+        
       if (!ObjectId.isValid(_id)) {
         return res.status(400).json({ error: 'Invalid Order Id' });
       }
@@ -87,11 +88,9 @@ const clientController = {
       const clientPhoto = clientData.clientPhoto;
 
       const deleteEntry = await client.findByIdAndDelete(_id);
-
       if (!deleteEntry) {
         return res.status(404).send('Unable to delete - entry not found');
       }
-
       // You may want to send a response here if the client entry is deleted successfully
       res.status(200).send(`Deleted successfully: ${deleteEntry}`);
 
