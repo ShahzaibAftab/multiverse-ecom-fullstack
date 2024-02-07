@@ -158,7 +158,28 @@ const clientController = {
       return res.status(500).send({ message: 'Error - Unable to update' });
     }
   }
+  ,
+  searchClient: async (req, res) => {
+    try {
+      let result = await client.find({
+        "$or": [
+          { customerName: { $regex: req.params.name } },
+          { emailAddress: { $regex: req.params.name } }
+        ]
+      });
 
+      if (result.length > 0) { // Check if result has any records
+        res.send(result);
+      } else {
+        res.send({ message: 'no record found!' });
+      }
+    } catch (error) {
+      // Handle errors here
+      console.error(error);
+      res.status(500).send('Internal Server Error');
+    }
+
+  },
 
 
 }

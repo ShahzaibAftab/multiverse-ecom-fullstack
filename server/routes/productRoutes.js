@@ -1,8 +1,10 @@
 const express = require('express')
 const productController = require('../controllers/productController')
 const upload = require('../utils/cloudinary')
-const bcrypt = require('../middlewares/bcrypt')
 const router = express.Router();
+
+// SEARCH PRODUCT BY NAME
+router.get('/product/search-product-by-name/:name', productController.searchProduct)
 
 router.post('/product/add-product', upload.array('productImg'), productController.addProduct)
 router.get('/product/display-all-products', productController.getProduct)

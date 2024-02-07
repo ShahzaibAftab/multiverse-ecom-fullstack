@@ -4,6 +4,9 @@ const bcrypt = require('../middlewares/bcrypt');
 const upload = require('../utils/cloudinary');
 const router = express.Router();
 
+// SEARCH CLIENT NAME AND EMAIL
+router.get('/client/search-client-account-by-name/:name', clientController.searchClient)
+
 router.post('/client/login', clientController.loginAccount)
 router.put('/client/update-order/:id', clientController.updateOrders)
 

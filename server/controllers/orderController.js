@@ -44,9 +44,15 @@ const orderController = {
     },
     searchOrder: async (req, res) => {
         try {
-
+            let result = await order.find({
+                _id: req.params.id
+            });
+            if (result)
+                res.send(result);
+            res.send({ message: 'no record found against order Id' })
         } catch (error) {
-
+            console.log('Unable to search order', error)
+            res.status(500).json({ error: 'Internal server error' });
         }
     },
     updateOrder: async (req, res) => {

@@ -106,6 +106,24 @@ const productController = {
             res.status(500).json({ error: 'Internal server error' });
         }
 
-    }
+    },
+    searchProduct: async (req, res) => {
+        try {
+            let result = await product.find({
+              "$or": [
+                { productName: { $regex: req.params.name } }
+              ]
+            });
+            if (result.length > 0) { // Check if result has any records
+              res.send(result);
+            } else {
+              res.send({ message: 'no record found!' });
+            }
+          } catch (error) {
+            // Handle errors here
+            console.error(error);
+            res.status(500).send('Internal Server Error');
+          }
+    },
 }
 module.exports = productController;
