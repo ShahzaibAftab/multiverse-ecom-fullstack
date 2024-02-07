@@ -40,7 +40,6 @@ const clientController = {
     } catch (error) {
       console.log('Error creating account', error)
       res.status(500).json({ error: 'Internal server error' });
-
     }
   },
   getAllAccount: async (req, res) => {
@@ -53,7 +52,6 @@ const clientController = {
     } catch (error) {
       console.log('Error getting data from Server', error)
       res.status(500).json({ error: 'Internal server error' });
-
     }
   },
   updateAccount: async (req, res) => {
@@ -149,7 +147,6 @@ const clientController = {
       }
 
       // Assuming id is a valid order ID
-      console.log('id', id)
       findClient.orders.push({ id });
       const updateRecord = await findClient.save();
       if (!updateRecord) {
