@@ -1,8 +1,30 @@
 const client = require('../models/client')
+const bcrypt = require('bcrypt')
 const cloudinaryImageDelete = require('../utils/cloudinaryImageDelete');
 const { ObjectId } = require('mongoose').Types;
 
 const clientController = {
+  loginAccount: async (req, res) => {
+    const { emailAddress, password } = req.body;
+    const getClientData = await client.findOne({ emailAddress });
+    if (!getClientData) {
+      return res.status(400).send({ message: 'Account does not exist' });
+    }
+    bcrypt.compare(password, getClientData.password, (err, result) => {
+      if (err) {
+        console.error('Error comparing passwords:', err);
+        return res.status(500).json({ error: 'Internal server error' });
+      }
+      if (result) {
+        // Passwords match
+        return res.status(200).send({ message: 'Account Found! Proceed to Homepage!' });
+      } else {
+        // Passwords do not match
+        console.log('Passwords do not match!');
+        return res.status(401).json({ error: 'Wrong Password' });
+      }
+    });
+  },
   createAccount: async (req, res) => {
     try {
       const { emailAddress } = req.body;
@@ -72,7 +94,6 @@ const clientController = {
       if (error.name === 'ValidationError') {
         return res.status(400).json({ message: error.message });
       }
-      // Use next to pass the error to the error-handling middleware
       next(error);
     }
   },
@@ -80,7 +101,7 @@ const clientController = {
     try {
       // FIRST VALIDATE ObjectId, STORE DATA AGAINST, DELETE DATA AGAINST ID AND DELETE CLOUDINARY IMAGE
       const _id = req.params.id;
-        
+
       if (!ObjectId.isValid(_id)) {
         return res.status(400).json({ error: 'Invalid Order Id' });
       }
@@ -110,8 +131,38 @@ const clientController = {
       if (error.name === 'ValidationError') {
         return res.status(400).json({ message: error.message });
       }
-      // Use next to pass the error to the error-handling middleware
+    }
+  },
+  updateOrders: async (req, res) => {
+    try {
+      const _id = req.params.id;
+      const id = req.body.id; // No need to parse as JSON
+
+      if (!ObjectId.isValid(_id)) {
+        console.log('Update id is not valid', _id);
+        return res.status(400).send('Invalid client ID');
+      }
+
+      const findClient = await client.findById(_id);
+      if (!findClient) {
+        return res.status(404).send({ message: 'Unable to update order record - client not found' });
+      }
+
+      // Assuming id is a valid order ID
+      console.log('id', id)
+      findClient.orders.push({ id });
+      const updateRecord = await findClient.save();
+      if (!updateRecord) {
+        return res.status(500).send({ message: 'Unable to update order record - Internal server Error' });
+      }
+      return res.status(200).send({ message: 'Order record updated successfully', client: updateRecord });
+    } catch (error) {
+      console.error('Error - Unable to update:', error);
+      return res.status(500).send({ message: 'Error - Unable to update' });
     }
   }
+
+
+
 }
 module.exports = clientController

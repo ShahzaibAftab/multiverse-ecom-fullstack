@@ -4,6 +4,9 @@ const bcrypt = require('../middlewares/bcrypt');
 const upload = require('../utils/cloudinary');
 const router = express.Router();
 
+router.post('/client/login', clientController.loginAccount)
+router.put('/client/update-order/:id', clientController.updateOrders)
+
 router.post('/client/create-account', bcrypt, clientController.createAccount)
 router.get('/client/all-client-account', clientController.getAllAccount)
 router.put('/client/update-client-account/:id', upload.single('clientPhoto'), clientController.updateAccount)
