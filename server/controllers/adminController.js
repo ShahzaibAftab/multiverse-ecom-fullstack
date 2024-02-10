@@ -2,6 +2,14 @@ const admin = require('../models/admin')
 const cloudinaryImageDelete = require('../utils/cloudinaryImageDelete');
 const { ObjectId } = require('mongoose').Types;
 const adminController = {
+    loginAdmin: async (req, res) => {
+        try {
+
+        } catch (error) {
+            console.log('Error logging In account', error)
+            res.status(500).json({ error: 'Internal server error' });
+        }
+    },
     addAdmin: async (req, res) => {
         try {
             const { emailAddress } = req.body;
