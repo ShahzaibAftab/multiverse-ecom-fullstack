@@ -1,9 +1,31 @@
 const admin = require('../models/admin')
 const cloudinaryImageDelete = require('../utils/cloudinaryImageDelete');
 const { ObjectId } = require('mongoose').Types;
+const bcrypt = require('bcrypt')
+const jwt = require('jsonwebtoken')
 const adminController = {
     loginAdmin: async (req, res) => {
         try {
+            const { emailAddress, password } = req.body;
+            const getAdmin = await admin.findOne({ emailAddress })
+            if (!getAdmin) {
+                return res.status(404).json({ message: 'Invalid email' })
+            }
+            bcrypt.compare(password, getAdmin.password, (err, result) => {
+                if (!result) {
+                    return res.status(401).send({ message: 'Wrong password' })
+                }
+                else {
+                    const token = jwt.sign({ emailAddress }, process.env.JWT_SCERETKEY);
+                    res.cookie('token', token, { httpOnly: true });
+
+                    res.send('Logged in successfully!');
+                }
+                if (err) {
+                    console.log('Error password mismatched', error)
+                    res.status(500).json({ error: 'Internal server error' });
+                }
+            })
 
         } catch (error) {
             console.log('Error logging In account', error)

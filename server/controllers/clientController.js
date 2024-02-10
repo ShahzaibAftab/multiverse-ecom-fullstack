@@ -17,6 +17,8 @@ const clientController = {
       }
       if (result) {
         // Passwords match
+        const token = jwt.sign({ emailAddress }, process.env.JWT_SCERETKEY);
+        res.cookie('token', token, { httpOnly: true });
         return res.status(200).send({ message: 'Account Found! Proceed to Homepage!' });
       } else {
         // Passwords do not match
