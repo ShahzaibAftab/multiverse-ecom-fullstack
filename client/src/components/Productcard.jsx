@@ -3,8 +3,11 @@ import Card from 'react-bootstrap/Card';
 import img from '../components/images/smartwatch.png'
 import ReactStars from "react-rating-stars-component";
 import { IoMdEye } from "react-icons/io";
+import { useDispatch } from 'react-redux';
+import { addItem } from '../redux/slices/cartSlices';
 const Productcard = ({ data }) => {
-    console.log('data', data)
+    // console.log('data', data)
+    const dispatch = useDispatch()
     return (
         <>
             <Card style={{ width: '18rem' }} className='flex-wrap border-0 my-3 mx-2'>
@@ -29,23 +32,9 @@ const Productcard = ({ data }) => {
                     <Card.Text className='text-muted text-decoration-none'>
                         {data.price} <span className='text-success' style={{ fontWeight: '1000' }}>$</span>
                     </Card.Text>
-                    <input type='button' className='btn btn-warning text-white' value='add to cart' />
+                    <input type='button' className='btn btn-warning text-white' value='add to cart' onClick={(e) => dispatch(addItem({ name: data.name, price: data.price }))} />
                 </Card.Body>
             </Card>
-
-            {/* <Card style={{ width: '18rem' }} className=' border my-3 mx-2'>
-                <div className='card-flex'>
-                    <div className='product-hover-price text-muted' style={{ fontSize: '13px' }}>2000 <span className='text-success' style={{ fontWeight: '1000' }}>$</span></div>
-                    <Card.Img variant="top" src={img} className='product-hover-img mx-auto' />
-                    <Card.Body className='text-center'>
-                        <Card.Text className='text-muted text-decoration-none mb-0 small-text'>
-                            Category
-                        </Card.Text>
-                        <Card.Title className='card-hover-text mb-0 mt-0'>Smartwatch</Card.Title>
-                        <input type='button' value='add to cart' className='btn btn-primary'></input>
-                    </Card.Body>
-                </div>
-            </Card> */}
         </>
 
     )

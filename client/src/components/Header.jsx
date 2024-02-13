@@ -1,5 +1,6 @@
 import React from 'react';
 import { Button, NavDropdown, Navbar, Form, Nav, FormControl } from 'react-bootstrap';
+import { Link } from 'react-router-dom';
 import { IoIosLogOut } from "react-icons/io";
 import Cart from './Cart';
 import logo from '../components/images/logo.png'
@@ -14,7 +15,7 @@ const Header = () => {
                 <Navbar.Toggle aria-controls="responsive-navbar-nav" />
                 <Navbar.Collapse id="responsive-navbar-nav">
                     <Nav className="mx-auto d-flex flex-column justify-content-center align-center pt-5">
-                        <Form className="d-flex mb-5" style={{width:'550px', marginRight:'100px'}}>
+                        <Form className="d-flex mb-5" style={{ width: '550px', marginRight: '100px' }}>
                             <FormControl
                                 // style={{ width: '550px' }}
                                 type="search"
@@ -39,11 +40,11 @@ const Header = () => {
                         </div>
                     </Nav>
                     <Nav className='mr-4 right-cart-section'>
-                        <Nav.Link href="#" className='pr-5'><Cart>1</Cart></Nav.Link>
-                        <Nav.Link className='mt-2' eventKey={2} href="#memes">
-                            Checkout <IoIosLogOut />
+                        <Nav.Link href="#" className='pr-5'><Cart /></Nav.Link>
+                        <Nav.Link className='mt-2' eventKey={2}>
+                            <Link to="/checkout">  Checkout <IoIosLogOut /></Link>
                         </Nav.Link>
-                    </Nav>                    
+                    </Nav>
                 </Navbar.Collapse>
 
             </Navbar>
