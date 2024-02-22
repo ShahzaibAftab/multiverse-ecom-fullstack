@@ -8,6 +8,12 @@ import Homepage from './pages/Homepage';
 import Product from './pages/Product';
 import Checkout from './pages/Checkout';
 import Orderconfirmed from './pages/Orderconfirmed';
+import AdminCanvas from './components/AdminCanvas';
+import AdminProductList from './components/AdminProductList';
+import Adminproductoperation from './pages/Adminproductoperation';
+import Adminproductdetails from './pages/Adminproductdetails';
+import Login from './pages/Clientlogin';
+import Clientsignup from './pages/Clientsignup';
 
 function App() {
   return (
@@ -19,6 +25,10 @@ function App() {
           <Route path='/contact-us' element={<Header />} />
           <Route path='/checkout' element={<Checkout />} />
           <Route path='/order-confirmed' element={<Orderconfirmed />} />
+
+          <Route path='/create-customer-account' element={<Clientsignup />} />
+          <Route path='/Admin-Product-operation' element={<Adminproductoperation />} />
+          <Route path='/Admin-Product-details' element={<Adminproductdetails />} />
           <Route path='*' element={<Notfound />} />
         </Routes>
       </Router>

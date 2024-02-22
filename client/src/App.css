@@ -224,3 +224,20 @@
 .round-border {
   border-radius: 20px;
 }
+/* ADMINCANVAS.JS */
+.menu-button {
+  transition: color 0.3s ease;
+}
+.menu-button:hover {
+  color: rgb(27, 156, 156);
+}
+/* ADMINDASHBOARD.JS */
+.addFlex {
+  display: flex;
+  flex-grow: 1;
+  flex-basis: 200;
+}
+/* LOGIN.JSX */
+.bg-login {
+  background-color: hsl(0, 0%, 96%);
+}
