@@ -11,6 +11,9 @@
   background-repeat: no-repeat;
   margin-bottom: 50px;
 }
+.btn {
+  transition: background-color 0.5s ease;
+}
 /* ADD-TO-CART */
 .right-cart-section {
   position: absolute;
@@ -218,6 +221,6 @@
   overflow: hidden; /* Ensure hidden overflow to hide the remaining products */
 }
 /* PRODUCT.JSX */
-.round-border{
+.round-border {
   border-radius: 20px;
 }
