@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
   MDBBtn,
   MDBContainer,
@@ -11,8 +11,39 @@ import {
   MDBIcon
 }
   from 'mdb-react-ui-kit';
+import { useEffect } from 'react';
 
 function Clientsignup() {
+  const [password, setPassword] = useState('');
+  const [showPassword, setShowPassword] = useState(false)
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false)
+  const [confirmPassword, setConfirmPassword] = useState('');
+  const [passwordsMatch, setPasswordsMatch] = useState(true);
+
+  const toggleShowPassword = () => {
+    setShowPassword(!showPassword);
+  };
+  const toggleShowConfirmPassword = () => {
+    setShowConfirmPassword(!showConfirmPassword);
+  };
+  const handlePasswordChange = (event) => {
+    setPassword(event.target.value);
+  };
+
+  const handleConfirmPasswordChange = (event) => {
+    setConfirmPassword(event.target.value);
+  };
+
+  useEffect(() => {
+    if (password !== '' && confirmPassword !== '') {
+      if (password === confirmPassword) {
+        setPasswordsMatch(true);
+      } else {
+        setPasswordsMatch(false);
+      }
+    }
+  }, [password, confirmPassword]);
+
   return (
     <MDBContainer fluid className='p-4 bg-login'>
 
@@ -36,7 +67,7 @@ function Clientsignup() {
 
         <MDBCol md='6'>
 
-          <MDBCard className='my-5'  style={{boxShadow: '0 0 10px rgba(0, 0, 0, 0.1)' }}>
+          <MDBCard className='my-5' style={{ boxShadow: '0 0 10px rgba(0, 0, 0, 0.1)' }}>
             <div className='d-flex justify-content-center mt-5 text-muted'>
               <h2>Register</h2>
             </div>
@@ -53,8 +84,42 @@ function Clientsignup() {
               </MDBRow>
 
               <MDBInput wrapperClass='mb-4' label='Contact' id='form1' type='number' />
-              <MDBInput wrapperClass='mb-4' label='Password' id='form1' type='password' />
 
+              <div>
+                <div className="mb-4 position-relative">
+                  <input
+                    className="form-control"
+                    type={showPassword ? 'text' : 'password'}
+                    placeholder="Password"
+                    value={password}
+                    onChange={handlePasswordChange}
+                  />
+                  <i
+                    className={`fas ${showPassword ? 'fa-eye-slash' : 'fa-eye'}`}
+                    onClick={toggleShowPassword}
+                    style={{ position: 'absolute', right: '10px', top: '50%', transform: 'translateY(-50%)', cursor: 'pointer' }}
+                  />
+                </div>
+              </div>
+
+              <div>
+                <div className="mb-4 position-relative">
+                  <input
+                    className="form-control"
+                    type={showConfirmPassword ? 'text' : 'password'}
+                    placeholder="confirm Password"
+                    value={confirmPassword}
+                    onChange={handleConfirmPasswordChange}
+                  />
+                  <i
+                    className={`fas ${showConfirmPassword ? 'fa-eye-slash' : 'fa-eye'}`}
+                    onClick={toggleShowConfirmPassword}
+                    style={{ position: 'absolute', right: '10px', top: '50%', transform: 'translateY(-50%)', cursor: 'pointer' }}
+                  />
+                </div>
+              </div>
+          
+              {!passwordsMatch && <p style={{ color: 'red' }}>Passwords do not match</p>}
               <div className='d-flex justify-content-center mb-4'>
                 <MDBCheckbox name='flexCheck' value='' id='flexCheckDefault' label='Subscribe to our newsletter' />
               </div>

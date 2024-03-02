@@ -12,7 +12,7 @@ import {
 }
 from 'mdb-react-ui-kit';
 
-function Login() {
+function Clientlogin() {
   return (
     <MDBContainer fluid className='p-4 bg-login'>
 
@@ -37,24 +37,13 @@ function Login() {
         <MDBCol md='6'>
 
           <MDBCard className='my-5'>
-            <MDBCardBody className='p-5'>
-
-              <MDBRow>
-                <MDBCol col='6'>
-                  <MDBInput wrapperClass='mb-4' label='First name' id='form1' type='text'/>
-                </MDBCol>
-
-                <MDBCol col='6'>
-                  <MDBInput wrapperClass='mb-4' label='Last name' id='form1' type='text'/>
-                </MDBCol>
-              </MDBRow>
+            <div className='d-flex justify-content-center mt-4'>
+            <h3>Login</h3>
+            </div>
+            <MDBCardBody className='p-5 text-muted'>
 
               <MDBInput wrapperClass='mb-4' label='Email' id='form1' type='email'/>
               <MDBInput wrapperClass='mb-4' label='Password' id='form1' type='password'/>
-
-              <div className='d-flex justify-content-center mb-4'>
-                <MDBCheckbox name='flexCheck' value='' id='flexCheckDefault' label='Subscribe to our newsletter' />
-              </div>
 
               <MDBBtn className='w-100 mb-4' size='md'>sign up</MDBBtn>
 
@@ -91,4 +80,4 @@ function Login() {
   );
 }
 
-export default Login;
+export default Clientlogin;

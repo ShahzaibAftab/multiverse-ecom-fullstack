@@ -12,8 +12,9 @@ import AdminCanvas from './components/AdminCanvas';
 import AdminProductList from './components/AdminProductList';
 import Adminproductoperation from './pages/Adminproductoperation';
 import Adminproductdetails from './pages/Adminproductdetails';
-import Login from './pages/Clientlogin';
+
 import Clientsignup from './pages/Clientsignup';
+import Clientlogin from './pages/Clientlogin';
 
 function App() {
   return (
@@ -27,6 +28,8 @@ function App() {
           <Route path='/order-confirmed' element={<Orderconfirmed />} />
 
           <Route path='/create-customer-account' element={<Clientsignup />} />
+          <Route path='/customer-login' element={<Clientlogin/>} />
+
           <Route path='/Admin-Product-operation' element={<Adminproductoperation />} />
           <Route path='/Admin-Product-details' element={<Adminproductdetails />} />
           <Route path='*' element={<Notfound />} />
