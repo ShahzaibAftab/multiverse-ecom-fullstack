@@ -18,6 +18,8 @@ import Clientlogin from './pages/Clientlogin';
 import Adminsignin from './pages/Adminsignin';
 import Adminaddproduct from './pages/Adminaddproduct';
 
+export const BASEURL='http://localhost:5000'
+
 function App() {
   return (
     <>

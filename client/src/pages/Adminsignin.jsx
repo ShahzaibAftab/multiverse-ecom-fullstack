@@ -1,4 +1,8 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { useMutation } from '@tanstack/react-query';
+import axios from 'axios'
+import { Button } from 'react-bootstrap';
+import { BASEURL } from './../App';
 import {
   MDBBtn,
   MDBContainer,
@@ -12,11 +16,46 @@ import {
   from 'mdb-react-ui-kit';
 
 function Adminsignin() {
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
+  const [emptyEmail, setEmptyEmail] = useState(null)
+  const [emptyPassword, setEmptyPassword] = useState(null)
+  const mutation = useMutation(
+    {
+      mutationFn: (formData) => {
+        console.log(formData)
+        return axios.post(`${BASEURL}/api/admin/sign-in`, formData)
+      }
+    });
+
+  const handleSubmit = async (e) => {
+    e.preventDefault()
+
+    if (email && password) {
+      try {
+        await mutation.mutate({ emailAddress: email, password })
+      } catch (error) {
+        console.error('Error logging in:', error);
+      }
+    }
+    if (!email) {
+      setEmptyEmail('*You must have to Enter Email first ')
+      setTimeout(() => {
+        setEmptyEmail(null)
+      }, 2000);
+    }
+    if (!password) {
+      setEmptyPassword(`*Please Enter your Password `)
+      setTimeout(() => {
+        setEmptyPassword(null)
+      }, 2000);
+    }
+
+  }
+
   return (
     <MDBContainer fluid className='p-4 bg-login'>
-
       <MDBRow>
-
         <MDBCol md='6' className='text-center text-md-start d-flex flex-column justify-content-center'>
 
           <h1 className="my-5 display-3 fw-bold ls-tight px-3">
@@ -41,15 +80,16 @@ function Adminsignin() {
             </div>
             <MDBCardBody className='p-5 text-muted'>
 
-              <MDBInput wrapperClass='mb-4' label='Email' id='form1' type='email' />
-              <MDBInput wrapperClass='mb-4' label='Password' id='form1' type='password' />
-
-              <MDBBtn className='w-100 mb-4' size='md'>sign up</MDBBtn>
-
+              <MDBInput onChange={(e) => setEmail(e.target.value)} value={email} label='Email' id='form1' type='email' />
+              <div className='text-danger'>{emptyEmail}</div>
+              <MDBInput wrapperClass='mt-4' onChange={(e) => setPassword(e.target.value)} value={password} label='Password' id='form2' type='password' />
+              <div className='text-danger'>{emptyPassword}</div>
+              <Button className='w-100' onClick={handleSubmit}> {mutation.isPending ? 'Logging in...' : 'Login'}</Button>
+              {mutation.error && <div>Incorrect Email or Password</div>}
+              {mutation.isError && <div>Error logging in. Please try again.</div>}
+              {mutation.isSuccess && <div className='text-center text-success'>Sign in successfull</div>}
               <div className="text-center">
-
-                <p>or sign up with:</p>
-
+                <p>or sign in with:</p>
                 <MDBBtn tag='a' color='none' className='mx-3' style={{ color: '#1266f1' }}>
                   <MDBIcon fab icon='facebook-f' size="sm" />
                 </MDBBtn>
@@ -65,9 +105,7 @@ function Adminsignin() {
                 <MDBBtn tag='a' color='none' className='mx-3' style={{ color: '#1266f1' }}>
                   <MDBIcon fab icon='github' size="sm" />
                 </MDBBtn>
-
               </div>
-
             </MDBCardBody>
           </MDBCard>
 

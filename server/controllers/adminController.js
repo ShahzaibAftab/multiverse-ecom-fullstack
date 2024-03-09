@@ -13,7 +13,7 @@ const adminController = {
             }
             bcrypt.compare(password, getAdmin.password, (err, result) => {
                 if (!result) {
-                    return res.status(401).send({ message: 'Wrong password' })
+                    return res.status(401).send({ message: 'Wrong_password' })
                 }
                 else {
                     const token = jwt.sign({ emailAddress }, process.env.JWT_SCERETKEY);
