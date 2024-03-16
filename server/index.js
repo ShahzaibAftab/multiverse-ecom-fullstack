@@ -14,7 +14,14 @@ app.use(express.urlencoded({ extended: true }));
 app.use(cors())
 app.use(cookieParser())
 
-app.get("/", (req, res) => { res.json({ messege: 'server is running' }) });
+// CORS POLICY TRUE
+app.set('Access-Control-Allow-Origin', '*');
+// res.setHeader("Content-Type", "application/json;charset=utf-8"); // Opening this comment will cause problems
+
+app.get("/", (req, res) => { 
+
+  res.json({ messege: 'server is running' }) 
+});
 
 // ROUTES
 app.use('/api', orderRoute)

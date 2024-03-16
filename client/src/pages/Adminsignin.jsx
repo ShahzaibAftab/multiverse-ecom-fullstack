@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useMutation } from '@tanstack/react-query';
 import axios from 'axios'
 import { Button } from 'react-bootstrap';
@@ -14,12 +14,15 @@ import {
   MDBIcon
 }
   from 'mdb-react-ui-kit';
+import { useNavigate } from 'react-router-dom';
 
 function Adminsignin() {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [emptyEmail, setEmptyEmail] = useState(null)
   const [emptyPassword, setEmptyPassword] = useState(null)
+
+  const navigate = useNavigate()
   const mutation = useMutation(
     {
       mutationFn: (formData) => {
@@ -52,7 +55,14 @@ function Adminsignin() {
     }
 
   }
+  useEffect(() => {
 
+    if (mutation.isSuccess) {
+      const token = mutation.data.data.token
+      document.cookie = `auth=${token};expires=${new Date(Date.now() + 25892000000).toUTCString()};path=/;`;
+      navigate('/add-Product');
+    }
+  }, [mutation.isSuccess, navigate]);
   return (
     <MDBContainer fluid className='p-4 bg-login'>
       <MDBRow>

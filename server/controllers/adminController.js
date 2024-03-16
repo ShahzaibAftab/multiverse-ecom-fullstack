@@ -3,35 +3,53 @@ const cloudinaryImageDelete = require('../utils/cloudinaryImageDelete');
 const { ObjectId } = require('mongoose').Types;
 const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
+const Cookies = require('js-cookie')
 const adminController = {
     loginAdmin: async (req, res) => {
         try {
             const { emailAddress, password } = req.body;
-            const getAdmin = await admin.findOne({ emailAddress })
-            if (!getAdmin) {
-                return res.status(404).json({ message: 'Invalid email' })
+            const Admin = await admin.findOne({ emailAddress });
+            if (!Admin) {
+                return res.status(404).json({ message: 'Invalid email' });
             }
-            bcrypt.compare(password, getAdmin.password, (err, result) => {
+    
+            // Use bcrypt.compare to compare the passwords
+            bcrypt.compare(password, Admin.password, async (err, result) => {
                 if (!result) {
-                    return res.status(401).send({ message: 'Wrong_password' })
+                    return res.status(401).send({ message: 'Wrong password' });
                 }
-                else {
-                    const token = jwt.sign({ emailAddress }, process.env.JWT_SCERETKEY);
-                    res.cookie('token', token, { httpOnly: true });
-
-                    res.send('Logged in successfully!');
-                }
-                if (err) {
-                    console.log('Error password mismatched', error)
+    
+                // Password is correct, generate token here
+                try {
+                             // const token = jwt.sign({ emailAddress }, process.env.JWT_SCERETKEY);
+                    // res.cookie('token', token, { httpOnly: true });
+                    // const token = jwt.sign({ emailAddress }, process.env.JWT_SCERETKEY);
+                    // Cookies.set('token', token, { expires: 7, secure: true });
+                    const token = await Admin.generateAuthToken();
+                    console.log(token); // This should work properly
+                    
+                    // Set the token in a cookie
+                    res.cookie('auth', token, {
+                        expiresIn: new Date(Date.now() + 25892000000),
+                        httpOnly: true,
+                        secure:true
+                    });
+    
+                    // Send the token back to the client
+                    res.json({ message: 'Logged in successfully!', token: token });
+                } catch (error) {
+                    console.log('Error generating token:', error);
                     res.status(500).json({ error: 'Internal server error' });
                 }
-            })
-
+            });
         } catch (error) {
-            console.log('Error logging In account', error)
+            console.log('Error logging in account', error);
             res.status(500).json({ error: 'Internal server error' });
         }
     },
+    
+
+
     addAdmin: async (req, res) => {
         try {
             const { emailAddress } = req.body;

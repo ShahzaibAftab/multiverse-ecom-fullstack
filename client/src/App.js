@@ -17,8 +17,9 @@ import Clientsignup from './pages/Clientsignup';
 import Clientlogin from './pages/Clientlogin';
 import Adminsignin from './pages/Adminsignin';
 import Adminaddproduct from './pages/Adminaddproduct';
+import PrivateRoutes from './components/PrivateRoutes';
 
-export const BASEURL='http://localhost:5000'
+export const BASEURL = 'http://localhost:5000'
 
 function App() {
   return (
@@ -35,9 +36,13 @@ function App() {
           <Route path='/customer-login' element={<Clientlogin />} />
 
           <Route path='/Admin-login' element={<Adminsignin />} />
-          <Route path='/add-Product' element={<Adminaddproduct />} />
-          <Route path='/Admin-Product-operation' element={<Adminproductoperation />} />
-          <Route path='/Admin-Product-details' element={<Adminproductdetails />} />
+
+          <Route element={<PrivateRoutes />}>
+
+            <Route path='/add-Product' element={<Adminaddproduct />} />
+            <Route path='/Admin-Product-operation' element={<Adminproductoperation />} />
+            <Route path='/Admin-Product-details' element={<Adminproductdetails />} />
+          </Route>
           <Route path='*' element={<Notfound />} />
         </Routes>
       </Router>

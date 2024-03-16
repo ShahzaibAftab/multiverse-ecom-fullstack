@@ -7,14 +7,17 @@ const productController = {
             const { productName, price, rating, description } = req.body;
 
             // Extract URLs of uploaded images from req.files
+            // console.log('productimgs', req.body.productImg,'array',req.body.productImg[0]);
             const productImgUrls = req.files.map(file => file.path);
-
+            console.log('body', req.body)
+            console.log('body', req.files)
+            console.log('productImgUrls', productImgUrls)
             // Map each image URL to an object with an 'img' property
             const productImgObjects = productImgUrls.map(url => ({ img: url }));
 
             const newProduct = new product({
                 productName,
-                productImg: productImgObjects, //Now each URL to a separate 'img' property
+                productImg: productImgObjects, // Now each URL to a separate 'img' property
                 price,
                 rating,
                 description
@@ -23,10 +26,10 @@ const productController = {
             await newProduct.save();
 
             // Respond with the newly created product
-            res.status(201).json(newProduct);
+            res.status(201).send(newProduct);
         } catch (error) {
-            console.log('Error adding a new Product', error)
-            res.status(500).json({ error: 'Internal server error' });
+            console.log('Error adding a new Product', error);
+            res.status(500).send({ error: 'Internal server error' });
         }
     },
     getProduct: async (req, res) => {
@@ -110,20 +113,20 @@ const productController = {
     searchProduct: async (req, res) => {
         try {
             let result = await product.find({
-              "$or": [
-                { productName: { $regex: req.params.name } }
-              ]
+                "$or": [
+                    { productName: { $regex: req.params.name } }
+                ]
             });
             if (result.length > 0) { // Check if result has any records
-              res.send(result);
+                res.send(result);
             } else {
-              res.send({ message: 'no record found!' });
+                res.send({ message: 'no record found!' });
             }
-          } catch (error) {
+        } catch (error) {
             // Handle errors here
             console.error(error);
             res.status(500).send('Internal Server Error');
-          }
+        }
     },
 }
 module.exports = productController;
