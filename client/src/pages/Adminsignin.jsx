@@ -62,7 +62,7 @@ function Adminsignin() {
       document.cookie = `auth=${token};expires=${new Date(Date.now() + 25892000000).toUTCString()};path=/;`;
       navigate('/add-Product');
     }
-  }, [mutation.isSuccess, navigate]);
+  }, [mutation.isSuccess]);
   return (
     <MDBContainer fluid className='p-4 bg-login'>
       <MDBRow>

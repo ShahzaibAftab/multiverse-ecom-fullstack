@@ -10,7 +10,7 @@ const productController = {
             // console.log('productimgs', req.body.productImg,'array',req.body.productImg[0]);
             const productImgUrls = req.files.map(file => file.path);
             console.log('body', req.body)
-            console.log('body', req.files)
+            console.log('body files', req.files)
             console.log('productImgUrls', productImgUrls)
             // Map each image URL to an object with an 'img' property
             const productImgObjects = productImgUrls.map(url => ({ img: url }));

@@ -7,6 +7,7 @@ import {
     CDBSidebarMenuItem,
     CDBSidebarFooter,
 } from 'cdbreact';
+import { Link } from 'react-router-dom';
 
 const AdminCanvas = () => {
     return (
@@ -15,17 +16,18 @@ const AdminCanvas = () => {
                 <CDBSidebarHeader prefix={<i className="fa fa-bars" />}>Admin Panel</CDBSidebarHeader>
                 <CDBSidebarContent>
                     <CDBSidebarMenu>
-                        <CDBSidebarMenuItem className='menu-button' icon="fas fa-th-large">Dashboard</CDBSidebarMenuItem>
+                        <Link to='/add-product'>   <CDBSidebarMenuItem className='menu-button' icon="fas fa-th-large">Dashboard</CDBSidebarMenuItem></Link>
                         <CDBSidebarMenuItem className='menu-button' icon="fas fa-sticky-note">Orders</CDBSidebarMenuItem>
                         <CDBSidebarMenuItem className='menu-button' icon="fas fa-user" iconType="solid">
                             Consumer account
                         </CDBSidebarMenuItem>
-                        <CDBSidebarMenuItem className='menu-button' icon="fas fa-credit-card" iconType="solid">
+                        <Link to={'/Admin-Product-details'}><CDBSidebarMenuItem className='menu-button' icon="fas fa-credit-card" iconType="solid">
                             Product Details
                         </CDBSidebarMenuItem>
-                        <CDBSidebarMenuItem className='menu-button' icon="fas fa-cogs" iconType="solid">
+                        </Link>
+                        <Link to={'/Admin-Product-operation'}>      <CDBSidebarMenuItem className='menu-button' icon="fas fa-cogs" iconType="solid">
                             Product Operations
-                        </CDBSidebarMenuItem>
+                        </CDBSidebarMenuItem></Link>
                         <CDBSidebarMenuItem className='menu-button' icon="fas fa-exclamation-circle" iconType="solid">
                             Consumer Complains
                         </CDBSidebarMenuItem>

@@ -1,0 +1,138 @@
+ productImg: '[object File],[object File],[object File]'
+PS E:\reactjs\Que-ecom-store\server> nodemon server
+[nodemon] 3.0.1
+[nodemon] to restart at any time, enter `rs`
+[nodemon] watching path(s): *.*
+[nodemon] watching extensions: js,mjs,cjs,json
+[nodemon] starting `node server index.js`
+Server running on port 5000
+Connected to MongoDB
+cookie auth=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NWVjYjVkZGJjYzhkMDg2NGYyNjdiMzkiLCJpYXQiOjE3MTA1ODA1MDh9.743nPIEUVgzUb1eqn7-LzP4AGGDa1TJKs36AZykxrIY
+eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NWVjYjVkZGJjYzhkMDg2NGYyNjdiMzkiLCJpYXQiOjE3MTA1ODA1MDh9.743nPIEUVgzUb1eqn7-LzP4AGGDa1TJKs36AZykxrIY
+{
+  _id: new ObjectId('65ecb5ddbcc8d0864f267b39'),
+  adminName: 'Admin 1',
+  adminPhoto: 'admin1.jpg',
+  password: '$2b$10$4ckuklFxzBZsAfga8vw1f.KILxbGCknTmb.F4xp230gXrkg3hcUBq',
+  contact: 1234567890,
+  emailAddress: 'admin1@example.com',
+  __v: 19,
+  tokens: [
+    {
+      token: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NWVjYjVkZGJjYzhkMDg2NGYyNjdiMzkiLCJpYXQiOjE3MTA0NDg2NDB9.qyhryjo-qidxUZzgO9_aB22RObQsQigUPmWKGvUMjIU',
+      _id: new ObjectId('65f3600073c4ccb1f9e61f72')
+    },
+    {
+      token: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NWVjYjVkZGJjYzhkMDg2NGYyNjdiMzkiLCJpYXQiOjE3MTA0NDg5ODR9.ieKQQuwLnb4oe5FUQSOf8Hc7sbFCFIlSw49LVnJPwrw',
+      _id: new ObjectId('65f3615858c54470b8a9dce6')
+    },
+    {
+      token: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NWVjYjVkZGJjYzhkMDg2NGYyNjdiMzkiLCJpYXQiOjE3MTA0NDkzODF9.cJ328Uq06JRmzBIpXsoHwXqHv3XwwV9xNesX_RZHcec',
+      _id: new ObjectId('65f362e55f8ce07045eaed97')
+    },
+    {
+      token: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NWVjYjVkZGJjYzhkMDg2NGYyNjdiMzkiLCJpYXQiOjE3MTA0NDk1MTl9.QalMsRsWQPYlgQuzuQ9dgulPyaV_jdsmYDRcjNTBjHc',
+      _id: new ObjectId('65f3636f5f8ce07045eaed9d')
+    },
+    {
+      token: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NWVjYjVkZGJjYzhkMDg2NGYyNjdiMzkiLCJpYXQiOjE3MTA0NDk4NjV9.V-SdYCurAjNwPsKvBxtvAd0dJsdyh_EAeOdwdtigjko',
+      _id: new ObjectId('65f364c9a006274ef1be5f75')
+    },
+    {
+      token: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NWVjYjVkZGJjYzhkMDg2NGYyNjdiMzkiLCJpYXQiOjE3MTA0NDk4Nzd9.O6zXOG-xpytilYgTc2ho_PSjNxkrNRTXYqdrqrsL45E',
+      _id: new ObjectId('65f364d5a006274ef1be5f7d')
+    },
+    {
+      token: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NWVjYjVkZGJjYzhkMDg2NGYyNjdiMzkiLCJpYXQiOjE3MTA0NTAwNDF9.KeCdGLZbjmv4HKMKklXrCP1njDUyo63lJfyfCHfhcCc',
+      _id: new ObjectId('65f36579637d4422902cafc9')
+    },
+    {
+      token: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NWVjYjVkZGJjYzhkMDg2NGYyNjdiMzkiLCJpYXQiOjE3MTA0NTAyMDh9.0c-XXErW9E80WcyRB9cTXAIC2yDdM0wux4e1WebxVS4',
+      _id: new ObjectId('65f36620637d4422902cafd3')
+    },
+    {
+      token: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NWVjYjVkZGJjYzhkMDg2NGYyNjdiMzkiLCJpYXQiOjE3MTA0NTAyMTB9.eGj4FaubGTTQk2cQWj6Te49XgkdmNu1D8bGVe6IyrvU',
+      _id: new ObjectId('65f36622637d4422902cafde')
+    },
+    {
+      token: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NWVjYjVkZGJjYzhkMDg2NGYyNjdiMzkiLCJpYXQiOjE3MTA0NTAyMTJ9.I2RsURrLuJ-V1GfeLq6qHfgMTgftANSzArI5Uj32VOI',
+      _id: new ObjectId('65f36624637d4422902cafea')
+    },
+    {
+      token: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NWVjYjVkZGJjYzhkMDg2NGYyNjdiMzkiLCJpYXQiOjE3MTA0NTA2NDV9.yR9WmjF8Ij_xkbSXUe2T2eoAKmU7RT97GLw-sPU9j-w',
+      _id: new ObjectId('65f367d59305e9169f4dc696')
+    },
+    {
+      token: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NWVjYjVkZGJjYzhkMDg2NGYyNjdiMzkiLCJpYXQiOjE3MTA0NTA3MTJ9.76YYaMSiCNXRRzWIon5UaOlDK_YtA4jcPzANyxbOOYM',
+      _id: new ObjectId('65f3681832986fad5340d9a3')
+    },
+    {
+      token: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NWVjYjVkZGJjYzhkMDg2NGYyNjdiMzkiLCJpYXQiOjE3MTA0NTA5MTV9.WoAgEKMl4TXYdzocfrpj3h6uvIMJLCYhcKM8W0vTVj8',
+      _id: new ObjectId('65f368e31dcc59810b1e9d24')
+    },
+    {
+      token: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NWVjYjVkZGJjYzhkMDg2NGYyNjdiMzkiLCJpYXQiOjE3MTA0NTEwMTd9.9CaPbDLfv0DN15AQqhyswX4XAe-sw6LKVcr5eNYZOAs',
+      _id: new ObjectId('65f369491dcc59810b1e9d34')
+    },
+    {
+      token: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NWVjYjVkZGJjYzhkMDg2NGYyNjdiMzkiLCJpYXQiOjE3MTA0NTIxMzl9.7mJEf53wJrKJPBdg4hksMtd6j1V4Xhf92GjGZnvy_4A',
+      _id: new ObjectId('65f36dab664cca2f84fb39d6')
+    },
+    {
+      token: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NWVjYjVkZGJjYzhkMDg2NGYyNjdiMzkiLCJpYXQiOjE3MTA0ODkyNzR9.vJT9y7tOTaQYUHEy4wFoMwzj0kWm79jYk-yr0cxV6No',
+      _id: new ObjectId('65f3feba0124d08387b32be6')
+    },
+    {
+      token: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NWVjYjVkZGJjYzhkMDg2NGYyNjdiMzkiLCJpYXQiOjE3MTA0ODkzNDh9.tldVU3LeBfbvOx0S-cZ0S6xl9kbuO2qYIG18ol4QfeQ',
+      _id: new ObjectId('65f3ff040124d08387b32bf9')
+    },
+    {
+      token: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NWVjYjVkZGJjYzhkMDg2NGYyNjdiMzkiLCJpYXQiOjE3MTA1Nzk4MTR9.e4-jVhxTRc4PHeiR5qEBo-UTS6cRfuR7tAXvRTr9p8o',
+      _id: new ObjectId('65f56066c523ce6323bc1d63')
+    },
+    {
+      token: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NWVjYjVkZGJjYzhkMDg2NGYyNjdiMzkiLCJpYXQiOjE3MTA1ODA1MDh9.743nPIEUVgzUb1eqn7-LzP4AGGDa1TJKs36AZykxrIY',
+      _id: new ObjectId('65f5631cd2ff2cee3a7ec36e')
+    }
+  ]
+}
+body [Object: null prototype] {
+  productName: 'Apple 15 Pro',
+  rating: '5',
+  price: '999',
+  description: 'ipsem lorem'
+}
+body files [
+  {
+    fieldname: 'productImg',
+    originalname: 'rio.jpeg',
+    encoding: '7bit',
+    mimetype: 'image/jpeg',
+    path: 'https://res.cloudinary.com/dn7hsa6j7/image/upload/v1710643197/pgbjkfcmoaofqmpa3rbt.jpg',
+    size: 517288,
+    filename: 'pgbjkfcmoaofqmpa3rbt'
+  },
+  {
+    fieldname: 'productImg',
+    originalname: 'beijing.jpeg',
+    encoding: '7bit',
+    mimetype: 'image/jpeg',
+    path: 'https://res.cloudinary.com/dn7hsa6j7/image/upload/v1710643201/ixrwabnasvyccaiw1h6i.jpg',
+    size: 680690,
+    filename: 'ixrwabnasvyccaiw1h6i'
+  },
+  {
+    fieldname: 'productImg',
+    originalname: 'rome.jpeg',
+    encoding: '7bit',
+    mimetype: 'image/jpeg',
+    path: 'https://res.cloudinary.com/dn7hsa6j7/image/upload/v1710643201/vcbsw9iyztemsuu8wloj.jpg',
+    size: 599513,
+    filename: 'vcbsw9iyztemsuu8wloj'
+  }
+]
+productImgUrls [
+  'https://res.cloudinary.com/dn7hsa6j7/image/upload/v1710643197/pgbjkfcmoaofqmpa3rbt.jpg',      
+  'https://res.cloudinary.com/dn7hsa6j7/image/upload/v1710643201/ixrwabnasvyccaiw1h6i.jpg',      
+  'https://res.cloudinary.com/dn7hsa6j7/image/upload/v1710643201/vcbsw9iyztemsuu8wloj.jpg'       
+]

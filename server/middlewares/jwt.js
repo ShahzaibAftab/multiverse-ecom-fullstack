@@ -24,6 +24,7 @@ const verifyToken = async (req, res, next) => {
     try {
         const cookie = req.headers.auth;
         console.log('cookie',req.headers.auth)
+
         
         // Check if cookie header is present
         if (!cookie) {
