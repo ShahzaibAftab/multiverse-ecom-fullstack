@@ -1,9 +1,18 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import Topbar from './Topbar';
 import { Form, InputGroup, Button, Table } from 'react-bootstrap';
 import { FaEye } from "react-icons/fa";
+import { useQueryClient,useQuery } from 'react-query';
+import axios from 'axios';
+import { BASEURL } from '../App';
+import getCookieFromBrowser from '../utils/getCookieFromBrowser';
+import getProduct from '../api/GetProduct';
+
 
 const AdminProductView = () => {
+
+    const { isLoading, error, data } = useQuery({ queryKey: ['todos'], queryFn: getProduct })
+    console.log(data)
     return (
         <>
             <div className='m-1 pt-3 p-5 bg-info' style={{ minWidth: '80%' }}>

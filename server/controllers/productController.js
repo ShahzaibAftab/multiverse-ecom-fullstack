@@ -34,11 +34,12 @@ const productController = {
     },
     getProduct: async (req, res) => {
         try {
-            const row = await product.find({})
-            if (row.length === 0) {
+            const rows = await product.find({})
+            if (rows.length === 0) {
                 res.status(500).send({ message: 'no record found' })
                 return;
             }
+            return res.status(200).json(rows);
         } catch (error) {
             console.log('Error creating order', error)
             res.status(500).json({ error: 'Internal server error' });
