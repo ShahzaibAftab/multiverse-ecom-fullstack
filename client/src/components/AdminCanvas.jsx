@@ -21,8 +21,8 @@ const AdminCanvas = () => {
                         <CDBSidebarMenuItem className='menu-button' icon="fas fa-user" iconType="solid">
                             Consumer account
                         </CDBSidebarMenuItem>
-                        <Link to={'/Admin-Product-details'}><CDBSidebarMenuItem className='menu-button' icon="fas fa-credit-card" iconType="solid">
-                            Product Details
+                        <Link to={'/product-return'}><CDBSidebarMenuItem className='menu-button' icon="fas fa-credit-card" iconType="solid">
+                            Product returns
                         </CDBSidebarMenuItem>
                         </Link>
                         <Link to={'/Admin-Product-operation'}>      <CDBSidebarMenuItem className='menu-button' icon="fas fa-cogs" iconType="solid">

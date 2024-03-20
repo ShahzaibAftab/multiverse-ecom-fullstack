@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useMutation } from '@tanstack/react-query';
+import { useMutation } from 'react-query';
 import axios from 'axios'
 import { Button } from 'react-bootstrap';
 import { BASEURL } from './../App';

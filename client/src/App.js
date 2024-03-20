@@ -34,14 +34,12 @@ function App() {
 
           <Route path='/create-customer-account' element={<Clientsignup />} />
           <Route path='/customer-login' element={<Clientlogin />} />
-
           <Route path='/Admin-login' element={<Adminsignin />} />
 
           <Route element={<PrivateRoutes />}>
-
             <Route path='/add-Product' element={<Adminaddproduct />} />
-            <Route path='/Admin-Product-operation' element={<Adminproductoperation />} />
-            <Route path='/Admin-Product-details' element={<Adminproductdetails />} />
+            <Route path='/Admin-Product-operation' element={<Adminproductdetails />} />
+            <Route path='/product-return' element={<Adminproductdetails />} />
           </Route>
           <Route path='*' element={<Notfound />} />
         </Routes>

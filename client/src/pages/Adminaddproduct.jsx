@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react'
 import AdminCanvas from '../components/AdminCanvas'
-import { Form, Col, Row } from 'react-bootstrap'
+import { Form, Col, Row,Spinner } from 'react-bootstrap'
 import { Button } from 'react-bootstrap'
 import Topbar from '../components/Topbar'
-import { useMutation } from '@tanstack/react-query'
+import { useMutation } from 'react-query'
 import axios from 'axios'
 import { BASEURL } from '../App'
 
@@ -14,6 +14,8 @@ const Adminaddproduct = () => {
     const [rating, setrating] = useState(5)
     const [description, setdescription] = useState('')
     const [productImg, setProductImg] = useState([]) // Initialize as an empty array
+    const [uploadSuccess, setUploadSuccess] = useState(false)
+    const [uploading, setUploading] = useState(false)
 
     const [browserCookie, setBrowserCookie] = useState(null)
 
@@ -42,14 +44,29 @@ const Adminaddproduct = () => {
     const mutation = useMutation({
         mutationFn: async (formData) => {
             try {
-                console.log('data', formData, 'array')
-                axiosInstance.post('/api/product/add-product', formData)
-                    .then((res) => console.log(res.data))
-                    .catch((err) => console.error(err));
+                setUploading(true);
+                const res = await axiosInstance.post('/api/product/add-product', formData);
+                console.log(res.data);
+                return res.data; // Returning data from mutation function
             } catch (error) {
                 console.error('Error in mutationFn:', error);
                 throw error; // Re-throw the error for the mutation hook to handle
+            } finally {
+                setUploading(false);
             }
+        },
+        onSuccess: () => {
+            setUploadSuccess(true);
+            setTimeout(() => {
+                setUploadSuccess(false);
+                // Reset form fields after success message is cleared
+                setproductName('');
+                setprice(0);
+                setrating(5);
+                setdescription('');
+                setProductImg([]);
+                window.location.reload()
+            }, 2000); // Clear success message after 3 seconds
         }
     });
 
@@ -64,7 +81,6 @@ const Adminaddproduct = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        console.log('pppp', productImg)
         const formData = new FormData();
         formData.append('productName', productName);
         formData.append('price', price);
@@ -74,7 +90,7 @@ const Adminaddproduct = () => {
         for (let i = 0; i < productImg.length; i++) {
             formData.append('productImg', productImg[i]);
         }
-        console.log('data before api',formData)
+
         if (browserCookie) {
             try {
                 await mutation.mutate(formData);
@@ -107,7 +123,7 @@ const Adminaddproduct = () => {
                                 <Form.Label>Product Images (max 3)</Form.Label>
                                 <Form.Control
                                     className='mb-2'
-                                    onChange={(e) => {setProductImg(e.target.files)}}
+                                    onChange={(e) => { setProductImg(e.target.files) }}
                                     multiple={true}
                                     type='file'
                                 />
@@ -116,7 +132,7 @@ const Adminaddproduct = () => {
                         <Row className="mb-3 mx-2">
                             <Form.Group as={Col} controlId="price">
                                 <Form.Label>Price</Form.Label>
-                                <Form.Control type="number" value={price} onChange={(e) => setprice(e.target.value)} placeholder="Enter price" />
+                                <Form.Control type="number" value={price} min={1} onChange={(e) => setprice(e.target.value)} placeholder="Enter price" />
                             </Form.Group>
                             <Form.Group as={Col} controlId="rating">
                                 <Form.Label>Rating (out of 5)</Form.Label>
@@ -131,8 +147,10 @@ const Adminaddproduct = () => {
                             <Button variant="primary" type="submit">
                                 Submit
                             </Button>
-                            {mutation.isSuccess && <div className='text-center text-success'>Upload successful</div>}
-                            {mutation.isPending && <div className='text-center text-success'>Uploading</div>}
+                            {uploadSuccess && <div className='text-center text-success'>Upload successful</div>}
+                            {uploading && <div className='text-center text-success'><Spinner animation="border" role="status">
+                                <span className="sr-only">Loading...</span>
+                            </Spinner>Uploading</div>}
                             {mutation.isError && <div className='text-center text-success'>Error uploading data, try again later</div>}
                         </div>
                     </Form>
@@ -142,4 +160,4 @@ const Adminaddproduct = () => {
     )
 }
 
-export default Adminaddproduct
+export default Adminaddproduct;

@@ -1,18 +1,26 @@
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import Topbar from './Topbar';
-import { Form, InputGroup, Button, Table } from 'react-bootstrap';
+import { Form, InputGroup, Button, Table, Spinner } from 'react-bootstrap';
 import { FaEye } from "react-icons/fa";
-import { useQueryClient,useQuery } from 'react-query';
-import axios from 'axios';
-import { BASEURL } from '../App';
-import getCookieFromBrowser from '../utils/getCookieFromBrowser';
+import { HiMiniPencilSquare } from "react-icons/hi2";
+import { RiDeleteBin6Line } from "react-icons/ri";
+import { useQuery } from 'react-query';
 import getProduct from '../api/GetProduct';
-
+import { Link } from 'react-router-dom';
 
 const AdminProductView = () => {
-
     const { isLoading, error, data } = useQuery({ queryKey: ['todos'], queryFn: getProduct })
-    console.log(data)
+
+    if (isLoading) {
+        return <div className='d-flex justify-content-center align-center'> <Spinner animation="border" role="status">
+            <span className="sr-only">Loading...</span>
+        </Spinner></div>
+    }
+
+    if (error) {
+        return <div>Error fetching data: {error.message}</div>;
+    }
+
     return (
         <>
             <div className='m-1 pt-3 p-5 bg-info' style={{ minWidth: '80%' }}>
@@ -27,7 +35,8 @@ const AdminProductView = () => {
                             <Button>Search</Button>
                         </InputGroup>
                     </Form>
-                    <Button style={{ height: '40px' }}>Add new Product</Button>
+                    <Link to='/add-product'>   <Button style={{ height: '40px' }}>Add new Product</Button>
+                    </Link>
                     <Topbar />
                 </div>
                 {/* TABLE */}
@@ -44,24 +53,25 @@ const AdminProductView = () => {
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td>1</td>
-                            <td>Mark</td>
-                            <td>Otto</td>
-                            <td>@mdo</td>
-                            <td>@mdo</td>
-                            <td>@mdo</td>
-                            <td className='text-center'><Button className='p-1 px-2 m-0'><FaEye /></Button></td>
-                        </tr>
-                        <tr>
-                            <td>2</td>
-                            <td>Mark</td>
-                            <td>Otto</td>
-                            <td>@mdo</td>
-                            <td>@mdo</td>
-                            <td>@mdo</td>
-                            <td className='text-center'><Button className='p-1 px-2 m-0'><FaEye /></Button></td>
-                        </tr>
+                        {data.map((product, index) => (
+                            <tr key={product._id}>
+                                <td>{index + 1}.</td>
+                                <td>{product.productName}</td>
+                                <td>{product.price}</td>
+                                <td>{product.rating}</td>
+                                <td>{product.description}</td>
+                                <td>
+                                    {product.productImg.map(img => (
+                                        <img key={img._id} src={img.img} alt="Product" style={{ width: '50px', height: '50px', marginRight: '2px' }} />
+                                    ))}
+                                </td>
+                                <td className='d-flex flex-column' >
+                                    <Button className='p-1 px-2 m-0 mt-3'><FaEye /></Button>
+                                    <Button className='p-1 px-2 m-0 mt-1'><HiMiniPencilSquare /></Button>
+                                    <Button className='btn btn-danger p-1 px-2 m-0 mt-1 mb-4'><RiDeleteBin6Line /></Button>
+                                </td>
+                            </tr>
+                        ))}
                     </tbody>
                 </Table>
             </div>
