@@ -12,7 +12,7 @@ const AdminProductView = () => {
     const { isLoading, error, data } = useQuery({ queryKey: ['todos'], queryFn: getProduct })
 
     if (isLoading) {
-        return <div className='d-flex justify-content-center align-center'> <Spinner animation="border" role="status">
+        return <div className='d-flex justify-content-center align-center vh-100'> <Spinner animation="border" role="status">
             <span className="sr-only">Loading...</span>
         </Spinner></div>
     }
@@ -23,7 +23,7 @@ const AdminProductView = () => {
 
     return (
         <>
-            <div className='m-1 pt-3 p-5 bg-info' style={{ minWidth: '80%' }}>
+            <div className='m-1 pt-3 p-5 bg-info' style={{maxHeight:'630px', minWidth: '80%',overflowY:'scroll' }}>
                 <div className='d-flex justify-content-between'>
                     <Form style={{ width: '70%' }}>
                         <InputGroup className="mb-3 ml-3">

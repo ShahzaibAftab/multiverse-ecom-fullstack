@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import Card from 'react-bootstrap/Card';
-import img from '../components/images/smartwatch.png'
+// import img from '../components/images/smartwatch.png'
 import ReactStars from "react-rating-stars-component";
 import { IoMdEye } from "react-icons/io";
 import { useDispatch } from 'react-redux';
@@ -20,15 +20,25 @@ const Productcard = ({ data }) => {
             setButtonValue('add to cart')
         }, 2000);
     }
+    console.log(data)
+
     return (
         <>
             <Card style={{ width: '18rem' }} className='flex-wrap border-0 my-3 mx-2'>
-                <Card.Img variant="top" src={data.photo} className='product-img mx-auto' />
+                {data.productImg && data.productImg.map((img, index) => (
+                    <React.Fragment key={img._id}>
+                        {index === 0 && (
+                            <Card.Img variant="top" src={img.img} className='product-img mx-auto' />
+                        )}
+                    </React.Fragment>
+                ))}
+
+
                 <div className="hot-tag">Hot</div>
                 <div className="view-icon"><IoMdEye /></div>
                 <Card.Body className='text-center'>
                     <Card.Text style={{ fontSize: '12px' }} className='text-muted text-decoration-none my-0'>{data.category}</Card.Text>
-                    <Card.Title className='card-text mb-0'>{data.name}</Card.Title>
+                    <Card.Title className='card-text mb-0'>{data.productName}</Card.Title>
                     <div className='d-flex justify-content-center'>
                         <ReactStars
                             count={5}

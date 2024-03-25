@@ -9,7 +9,7 @@ import Footer from './../components/Footer';
 import sliderImg1 from '../components/images/c1.jpg'
 import sliderImg2 from '../components/images/c2.jpg'
 import sliderImg3 from '../components/images/c3.png'
-import { FaArrowLeft, FaArrowRight } from 'react-icons/fa'; // Assuming you have arrow icons
+import { FaArrowLeft, FaArrowRight } from 'react-icons/fa'; 
 
 const Slider = React.lazy(() => import('../components/Slider'));
 const categoryType = [
@@ -70,6 +70,9 @@ const productData = [
 
 
 const Homepage = () => {
+
+
+    
     const [startIndex, setStartIndex] = useState(0);
     const handlePrevClick = () => {
         setStartIndex((prevIndex) => Math.max(0, prevIndex - 4));
@@ -93,8 +96,8 @@ const Homepage = () => {
             <Benefits />
             <div className='d-flex justify-content-center flex-wrap'>
                 {
-                    productData.map((data, index) => (
-                        <Productcard key={index} data={data} />
+                    productData.map((dataObj, index) => (
+                        <Productcard key={index} data={dataObj} />
                     ))
                 }
             </div>
