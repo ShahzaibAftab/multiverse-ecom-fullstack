@@ -5,7 +5,7 @@ PS E:\reactjs\Que-ecom-store\server> nodemon server
 [nodemon] watching path(s): *.*
 [nodemon] watching extensions: js,mjs,cjs,json
 [nodemon] starting `node server index.js`
-Server running on port 5000
+Server running on port 5000   
 Connected to MongoDB
 cookie auth=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NWVjYjVkZGJjYzhkMDg2NGYyNjdiMzkiLCJpYXQiOjE3MTA1ODA1MDh9.743nPIEUVgzUb1eqn7-LzP4AGGDa1TJKs36AZykxrIY
 eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NWVjYjVkZGJjYzhkMDg2NGYyNjdiMzkiLCJpYXQiOjE3MTA1ODA1MDh9.743nPIEUVgzUb1eqn7-LzP4AGGDa1TJKs36AZykxrIY

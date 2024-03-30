@@ -2,6 +2,37 @@ import React from 'react'
 import html2canvas from 'html2canvas';
 
 const Orderconfirmed = () => {
+    const data = {
+
+        "customerName": "Jane Smith",
+        "contact": 9876543210,
+        "emailAddress": "jane.smith@example.com",
+        "postalCode": 54321,
+        "city": "Sampleville",
+        "province": "Test Province",
+        "address": "456 Oak St",
+        "paymentMode": "PayPal",
+        "total": 200.75,
+        "products": [
+            {
+                "name": "Product X",
+                "quantity": 1,
+                "price": 200
+            },
+            {
+                "name": "Product Y",
+                "quantity": 2,
+                "price": 200
+
+            },
+            {
+                "name": "Product Z",
+                "quantity": 3,
+                "price": 200
+
+            }
+        ],
+    }
     const saveAsPNG = () => {
         // Get the entire page element
         const pageElement = document.getElementById('root');
@@ -38,29 +69,30 @@ const Orderconfirmed = () => {
                                 <p style={{ color: '#7e8d9f', fontSize: '20px' }}>Invoice {'>>'} <strong>ID: #123-123</strong></p>
                             </div>
                             <div class="col-xl-3 float-end">
-                                <a class="btn btn-light text-capitalize border-0" data-mdb-ripple-color="dark"><i
-                                    class="fas fa-print text-muted" onClick={saveAsPNG}></i> Print</a>
+                                <a class="btn btn-light text-capitalize border-0" data-mdb-ripple-color="dark" onClick={saveAsPNG}>
+                                    <i class="fas fa-print text-muted"></i> Print
+                                </a>
                             </div>
+
                             <hr />
                         </div>
 
                         <div class="container">
                             <div class="col-md-12">
                                 <div class="text-center">
-                                    <i class="fab fa-mdb fa-4x ms-0" style={{ color: '#5d9fc5' }}></i>
-                                    <p class="pt-0">Order Receipt</p>
-                                </div>
 
+                                    <h6 class="pt-0">Order Receipt</h6>
+                                </div>
                             </div>
 
 
                             <div class="row">
                                 <div class="col-xl-8">
                                     <ul class="list-unstyled">
-                                        <li class="text-muted">To: <span style={{ color: '#5d9fc5' }}>John Lorem</span></li>
-                                        <li class="text-muted">Street, City</li>
-                                        <li class="text-muted">State, Country</li>
-                                        <li class="text-muted"><i class="fas fa-phone"></i> 123-456-789</li>
+                                        <li class="text-muted">To: <span style={{ color: '#5d9fc5' }}>{data.customerName}</span></li>
+                                        <li class="text-muted">{data.city}</li>
+                                        <li class="text-muted">{data.province}</li>
+                                        <li class="text-muted"><i class="fas fa-phone"></i> {data.contact}</li>
                                     </ul>
                                 </div>
                                 <div class="col-xl-4">
@@ -69,10 +101,10 @@ const Orderconfirmed = () => {
                                         <li class="text-muted"><i class="fas fa-circle" style={{ color: '#84B0CA' }} ></i> <span
                                             class="fw-bold">ID:</span>#123-456</li>
                                         <li class="text-muted"><i class="fas fa-circle" style={{ color: '#84B0CA' }}></i> <span
-                                            class="fw-bold">Creation Date: </span>Jun 23,2021</li>
+                                            class="fw-bold">Creation Date: </span>{new Date(Date.now()).toLocaleString()}</li>
                                         <li class="text-muted"><i class="fas fa-circle" style={{ color: '#84B0CA' }}></i> <span
                                             class="me-1 fw-bold">Status:</span><span class="badge bg-warning text-black fw-bold">
-                                                Unpaid</span></li>
+                                                {data.paymentMode}</span></li>
                                     </ul>
                                 </div>
                             </div>
@@ -89,43 +121,28 @@ const Orderconfirmed = () => {
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr>
-                                            <th scope="row">1</th>
-                                            <td>Pro Package</td>
-                                            <td>4</td>
-                                            <td>$200</td>
-                                            <td>$800</td>
-                                        </tr>
-                                        <tr>
-                                            <th scope="row">2</th>
-                                            <td>Web hosting</td>
-                                            <td>1</td>
-                                            <td>$10</td>
-                                            <td>$10</td>
-                                        </tr>
-                                        <tr>
-                                            <th scope="row">3</th>
-                                            <td>Consulting</td>
-                                            <td>1 year</td>
-                                            <td>$300</td>
-                                            <td>$300</td>
-                                        </tr>
+                                        {
+                                            data.products?.map((obj, index) => (
+                                                <tr key={index}>
+                                                    <th scope="row">{index + 1}</th>
+                                                    <td>{obj.name}</td>
+                                                    <td>{obj.quantity}</td>
+                                                    <td>{obj.price}$</td>
+                                                    <td>{obj.price * obj.quantity}$</td>
+                                                </tr>
+                                            ))
+                                        }
                                     </tbody>
 
                                 </table>
                             </div>
                             <div class="row">
-                                <div class="col-xl-8">
-                                    <p class="ms-3">Add additional notes and payment information</p>
-
-                                </div>
                                 <div class="col-xl-3">
                                     <ul class="list-unstyled">
-                                        <li class="text-muted ms-3"><span class="text-black me-4">SubTotal</span>$1110</li>
-                                        <li class="text-muted ms-3 mt-2"><span class="text-black me-4">Tax(15%)</span>$111</li>
+                                        <li class="text-muted ms-3"><span class="text-black me-4">SubTotal</span>${data.total}</li>
                                     </ul>
                                     <p class="text-black float-start"><span class="text-black me-3"> Total Amount</span><span
-                                        style={{ fontSize: '25px' }}>$1221</span></p>
+                                        style={{ fontSize: '25px' }}>$ {data.total}</span></p>
                                 </div>
                             </div>
                             <hr />

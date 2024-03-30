@@ -17,7 +17,10 @@ const AdminCanvas = () => {
                 <CDBSidebarContent>
                     <CDBSidebarMenu>
                         <Link to='/add-product'>   <CDBSidebarMenuItem className='menu-button' icon="fas fa-th-large">Dashboard</CDBSidebarMenuItem></Link>
-                        <CDBSidebarMenuItem className='menu-button' icon="fas fa-sticky-note">Orders</CDBSidebarMenuItem>
+                        <Link to={'/Customer-order'}>
+                            <CDBSidebarMenuItem className='menu-button' icon="fas fa-sticky-note">Orders
+                            </CDBSidebarMenuItem>
+                        </Link>
                         <CDBSidebarMenuItem className='menu-button' icon="fas fa-user" iconType="solid">
                             Consumer account
                         </CDBSidebarMenuItem>

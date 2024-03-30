@@ -37,7 +37,7 @@ const Checkout = () => {
                                     <th>#</th>
                                     <th>items</th>
                                     <th>quantity</th>
-                                    <th>total</th>
+                                    <th>Price</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -61,8 +61,8 @@ const Checkout = () => {
                                     </th>
                                     <td className='text-center'>
                                         <p style={{ fontSize: 'x-large' }}>
-                                            {/* {total === 0 ? "<p>Cart is Empty</p>" : "/-"} */}
-                                            {total} /-
+                                            {total === 0 ? <p className='text-muted'>Cart is Empty</p>:total + "/-"}
+                                        
                                         </p>
                                     </td>
                                 </tr>

@@ -5,7 +5,7 @@ import demo from '../components/images/c1.jpg'
 import Slider from '../components/Slider'
 import ReactStars from 'react-rating-stars-component';
 
-const Product = () => {
+const Product = ({data}) => {
     const ratingChanged = (newRating) => {
         console.log(newRating);
       };
@@ -21,16 +21,16 @@ const Product = () => {
                     </div>
                     <div className='col-sm-12 col-md-6 mt-5'>
                         <div className='d-flex justify-content-around mr-5'>
-                            <h4>Product Name:</h4><p className='mt-1 fs-5'>Smartwatch v8</p>
+                            <h4>Product Name:</h4><p className='mt-1 fs-5'>{data.productName}</p>
                         </div>
                         <div className='d-flex justify-content-around'>
-                            <h4>Price:</h4> <p>5000<span className='text-success' style={{ fontWeight: '1000' }}>$</span></p>
+                            <h4>Price:</h4> <p>{data.price}<span className='text-success' style={{ fontWeight: '1000' }}>$</span></p>
                         </div>
                         <div className='d-flex justify-content-around'>
                             <h4 className='ml-3'>Overall Rating:</h4>
                             <ReactStars
                                 count={5}
-                                value={4.5}
+                                value={data.rating}
                                 edit={false}
                                 isHalf={true}
                                 halfIcon={<i className="fa fa-star-half-alt"></i>}
@@ -40,7 +40,7 @@ const Product = () => {
                             />
                         </div>
                         <div className='d-flex justify-content-around bg-info text-muted round-border mt-5 px-5 py-2'>
-                            <p style={{ textAlign: 'justify' }}><h6 className='ml-5'>Description:</h6>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Sequi debitis eaque nisi praesentium atque expedita consectetur maxime. Accusantium itaque repellendus suscipit, ab similique obcaecati, dolor voluptates fugiat quod vitae ut.</p>
+                            <p style={{ textAlign: 'justify' }}><h6 className='ml-5'>Description:</h6>{data.description}</p>
                         </div>
                         <div class="row">
                             <div class="col-md-6 mt-2">

@@ -1,10 +1,11 @@
 import axios from "axios";
-import { BASEURL } from "../App";
+import { BASEURL } from "../App.js";
 import getCookieFromBrowser from "./getCookieFromBrowser";
 
 const browserCookie = getCookieFromBrowser()
+
 const axiosInstance = axios.create({
-    baseURL: BASEURL,
+    baseURL: 'http://localhost:5000',
     headers: {
         "auth": `auth=${browserCookie}`,
         'Content-Type': 'multipart/form-data'

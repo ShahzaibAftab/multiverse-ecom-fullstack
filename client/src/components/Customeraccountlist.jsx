@@ -5,22 +5,21 @@ import { FaEye } from "react-icons/fa";
 import { HiMiniPencilSquare } from "react-icons/hi2";
 import { RiDeleteBin6Line } from "react-icons/ri";
 import { useQuery } from 'react-query';
-import getProduct from '../api/GetProduct';
 import { Link } from 'react-router-dom';
+import GetCustomer from '../api/GetCustomer';
 
-const AdminProductView = () => {
-    const { isLoading, error, data } = useQuery({ queryKey: ['todos'], queryFn: getProduct })
+const Customeraccountlist = () => {
+  
+    const { isLoading, error, data } = useQuery('getCustomerInfo', GetCustomer);
 
     if (isLoading) {
         return <div className='d-flex justify-content-center align-center vh-100'> <Spinner animation="border" role="status">
-            <span className="sr-only">Loading...</span>
         </Spinner></div>
     }
 
     if (error) {
         return <div>Error fetching data: {error.message}</div>;
     }
-
     return (
         <>
             <div className='m-1 pt-3 p-5 bg-info' style={{ maxHeight: '630px', minWidth: '80%', overflowY: 'scroll' }}>
@@ -44,31 +43,42 @@ const AdminProductView = () => {
                     <thead>
                         <tr>
                             <th>#</th>
-                            <th>Product Name</th>
-                            <th>Price</th>
-                            <th>Rating</th>
-                            <th>Description</th>
-                            <th>Images</th>
+                            <th>Customer Name</th>
+                            <th>Contact</th>
+                            <th>Email Address</th>
+                            <th>Postal Code</th>
+                            <th>City</th>
+                            <th>Province</th>
+                            <th>Address</th>
+                            <th>Payment Mode</th>
+                            <th>Total</th>
+                            <th>Order Items</th>
                             <th className='text-center'>Operations</th>
                         </tr>
                     </thead>
                     <tbody>
-                        {data && data.map((product, index) => (
-                            <tr key={product._id}>
+                        {data && data.map((order, index) => (
+                            <tr key={order._id}>
                                 <td>{index + 1}.</td>
-                                <td>{product.productName}</td>
-                                <td>{product.price}</td>
-                                <td>{product.rating}</td>
-                                <td>{product.description}</td>
+                                <td>{order.customerName}</td>
+                                <td>{order.contact}</td>
+                                <td>{order.emailAddress}</td>
+                                <td>{order.postalCode}</td>
+                                <td>{order.city}</td>
+                                <td>{order.province}</td>
+                                <td>{order.address}</td>
+                                <td>{order.paymentMode}</td>
+                                <td>{order.total}</td>
                                 <td>
-                                    {product.productImg.map(img => (
-                                        <img key={img._id} src={img.img} alt="Product" style={{ width: '50px', height: '50px', marginRight: '2px' }} />
+                                    {order.products.map(obj => (
+                                        `${obj.name} x ${obj.quantity} x ${obj.price}`
                                     ))}
                                 </td>
+
                                 <td className='d-flex flex-column' >
                                     <Button className='p-1 px-2 m-0 mt-3'><FaEye /></Button>
                                     <Button className='p-1 px-2 m-0 mt-1'><HiMiniPencilSquare /></Button>
-                                    <Button className='btn btn-danger p-1 px-2 m-0 mt-1 mb-4'><RiDeleteBin6Line /></Button>
+                                    <Button className='btn btn-danger p-1 px-2 m-0 mt-1 mb-3'><RiDeleteBin6Line /></Button>
                                 </td>
                             </tr>
                         ))}
@@ -79,4 +89,4 @@ const AdminProductView = () => {
     )
 }
 
-export default AdminProductView
+export default Customeraccountlist

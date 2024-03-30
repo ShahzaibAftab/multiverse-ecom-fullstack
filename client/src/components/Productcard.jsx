@@ -12,7 +12,7 @@ const Productcard = ({ data }) => {
     const dispatch = useDispatch()
 
     const addToCart = (e) => {
-        dispatch(addItem({ name: data.name, price: data.price }))
+        dispatch(addItem({ name: data.productName, price: data.price }))
         setButtonColor('btn btn-success')
         setButtonValue('Added')
         setTimeout(() => {
