@@ -2,7 +2,7 @@ import axios from "axios";
 import { BASEURL } from "../App.js";
 import getCookieFromBrowser from "./getCookieFromBrowser";
 
-const browserCookie = getCookieFromBrowser()
+const browserCookie = await getCookieFromBrowser()
 
 const axiosInstance = axios.create({
     baseURL: 'http://localhost:5000',
