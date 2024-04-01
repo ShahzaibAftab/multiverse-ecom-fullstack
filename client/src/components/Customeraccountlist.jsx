@@ -9,13 +9,6 @@ import { Link } from 'react-router-dom';
 import GetCustomer from '../api/GetCustomer';
 
 const Customeraccountlist = () => {
-    useEffect(() => {
-
-
-        return () => {
-
-        }
-    }, [])
 
     const { isLoading, error, data } = useQuery(['getCustomerInfo'], GetCustomer);
 

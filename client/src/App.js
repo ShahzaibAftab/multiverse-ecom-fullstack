@@ -20,6 +20,7 @@ import Adminaddproduct from './pages/Adminaddproduct';
 import PrivateRoutes from './components/PrivateRoutes';
 import Customerorders from './pages/Customerorders';
 import Customeraccounts from './pages/Customeraccounts';
+import AdminProfile from './pages/AdminProfile';
 
 
 export const BASEURL = 'http://localhost:5000'
@@ -39,8 +40,9 @@ function App() {
           <Route path='/Admin-login' element={<Adminsignin />} />
 
           <Route element={<PrivateRoutes />}>
-            <Route path='/add-Product' element={<Adminaddproduct />} />
             <Route path='/Admin-Product-operation' element={<Adminproductdetails />} />
+            <Route path='/Admin-Profile' element={<AdminProfile />} />
+            <Route path='/add-Product' element={<Adminaddproduct />} />
             <Route path='/Customer-order' element={<Customerorders />} />
             <Route path='/product-return' element={<Adminproductdetails />} />
             <Route path='/customer-account-list' element={<Customeraccounts />} />

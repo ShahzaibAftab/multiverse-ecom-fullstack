@@ -3,7 +3,6 @@ const cloudinaryImageDelete = require('../utils/cloudinaryImageDelete');
 const { ObjectId } = require('mongoose').Types;
 const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
-const Cookies = require('js-cookie')
 const adminController = {
     loginAdmin: async (req, res) => {
         try {
@@ -78,6 +77,9 @@ const adminController = {
             console.log('Error getting data from Server', error)
             res.status(500).json({ error: 'Internal server error' });
         }
+    },
+    getMyAdmin: async(req,res)=>{
+
     },
     updateAdmin: async (req, res) => {
         try {
