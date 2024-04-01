@@ -1,7 +1,6 @@
 import React from 'react'
 import Commonheader from '../components/Commonheader'
 import { Col, Container, Row, Table } from 'react-bootstrap';
-
 import Deliveryform from '../components/Deliveryform';
 import { useDispatch, useSelector } from 'react-redux';
 import { addItem, desQuantity } from '../redux/slices/cartSlices';
@@ -17,11 +16,14 @@ const Checkout = () => {
             <Container fluid >
                 <Row className='mt-5'>
                     <Col>
-                        <div className='mx-5'>
-                            <div style={{ borderRadius: '20px', backgroundColor: '#F8F9F8' }} className='border p-5'>
-                                <Deliveryform />
+                        {
+                            (total !== undefined && total !== 0) &&
+                            <div className='mx-5'>
+                                <div style={{ borderRadius: '20px', backgroundColor: '#F8F9F8' }} className='border p-5'>
+                                    <Deliveryform />
+                                </div>
                             </div>
-                        </div>
+                        }
                     </Col>
                     <Col>
                         <Table style={{ minHeight: '350px' }} className='overflow-scroll flex-wrap' bordered hover>
@@ -61,8 +63,8 @@ const Checkout = () => {
                                     </th>
                                     <td className='text-center'>
                                         <p style={{ fontSize: 'x-large' }}>
-                                            {total === 0 ? <p className='text-muted'>Cart is Empty</p>:total + "/-"}
-                                        
+                                            {total === 0 ? <p className='text-muted'>Cart is Empty</p> : total + "/-"}
+
                                         </p>
                                     </td>
                                 </tr>

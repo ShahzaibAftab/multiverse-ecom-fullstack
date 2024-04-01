@@ -51,25 +51,31 @@ const DeliveryForm = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        const isAnyFieldEmpty = Object.values(formData).some(value => value === '');
+
+        if (isAnyFieldEmpty) {
+            alert('Please fill in all fields');
+            return;
+        }
+
         if (total !== 0) {
             const orderInvoice = { ...formData, products: checkoutItems, total }
             try {
                 await mutation.mutate(orderInvoice)
-                if (mutation.isSuccess) {
-                    setTimeout(() => {
-                        dispatch(clearItems())
-                        navigate('/')
-                    }, 1000);
-                }
             } catch (error) {
                 console.log(`Error Placing order`)
             }
-        }
-        else {
-            alert('Cart is empty')
+        } else {
+            alert('Cart is empty');
         }
     };
 
+    if (mutation.isSuccess) {
+        setTimeout(() => {
+            dispatch(clearItems())
+            navigate('/')
+        }, 1000);
+    }
     return (
         <>
             <Form onSubmit={handleSubmit}>
@@ -143,9 +149,9 @@ const DeliveryForm = () => {
                 <Button variant="primary" type="submit" className='mt-5 w-100'>
                     Confirm
                 </Button>
-                {mutation.isSuccess && <div className='text-center text-success'>Order Placed</div>}
-                {mutation.isLoading && <div className='text-center text-success'><Spinner animation="border" role="status"></Spinner></div>}
-                {mutation.isError && <div className='text-center text-success'>Error uploading data, try again later</div>}
+                {mutation.isSuccess && <div className='text-center text-success'>Order Placed... redirecting to MainPage</div>}
+                {mutation.isLoading && <div className='text-center text-warning'><Spinner animation="border" role="status"></Spinner></div>}
+                {mutation.isError && <div className='text-center text-danger'>Error uploading data, try again later</div>}
             </Form>
         </>
     );
