@@ -24,13 +24,10 @@ const verifyToken = async (req, res, next) => {
     try {
         const cookie = req.headers.auth;
         console.log('cookie',req.headers.auth)
-
-        
         // Check if cookie header is present
         if (!cookie) {
             throw new Error("No cookie provided");
         }
-
         const cookieString = cookie;
         const cookies = cookieString.split("; ");
         let myCookieValue;

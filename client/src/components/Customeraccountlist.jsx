@@ -43,8 +43,8 @@ const Customeraccountlist = () => {
                     <thead>
                         <tr>
                             <th>#</th>
-                            <th>Customer Name</th>
                             <th>Profile Picture</th>
+                            <th>Customer Name</th>
                             <th>Contact</th>
                             <th>Email Address</th>
                             <th>Postal Code</th>
@@ -59,8 +59,10 @@ const Customeraccountlist = () => {
                         {data && data.map((order, index) => (
                             <tr key={order._id}>
                                 <td>{index + 1}.</td>
+                                <td>
+                                <img src={order.clientPhoto} alt='client' loading="lazy" style={{height:'50px',width:'50px',borderRadius:'50%'}}/>
+                                </td>
                                 <td>{order.customerName}</td>
-                                <td>{order.clientPhoto}</td>
                                 <td>{order.contact}</td>
                                 <td>{order.emailAddress}</td>
                                 <td>{order.postalCode}</td>

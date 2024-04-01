@@ -1,7 +1,7 @@
 import AxiosInstance from "../utils/AxiosInstance";
 
 const GetAdmin = async () => {
-  const response = await AxiosInstance.get('api/client/all-client-account');
-  return response.data;
+    const response = await AxiosInstance.get('api/admin/get-admin');
+    return response.data;
 };
 export default GetAdmin;

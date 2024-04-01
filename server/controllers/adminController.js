@@ -2,7 +2,8 @@ const admin = require('../models/admin')
 const cloudinaryImageDelete = require('../utils/cloudinaryImageDelete');
 const { ObjectId } = require('mongoose').Types;
 const bcrypt = require('bcrypt')
-const jwt = require('jsonwebtoken')
+const jwt = require('jsonwebtoken');
+const getUserIdFromToken = require('../utils/getUserIdFromToken');
 const adminController = {
     loginAdmin: async (req, res) => {
         try {
@@ -11,29 +12,29 @@ const adminController = {
             if (!Admin) {
                 return res.status(404).json({ message: 'Invalid email' });
             }
-    
+
             // Use bcrypt.compare to compare the passwords
             bcrypt.compare(password, Admin.password, async (err, result) => {
                 if (!result) {
                     return res.status(401).send({ message: 'Wrong password' });
                 }
-    
+
                 // Password is correct, generate token here
                 try {
-                             // const token = jwt.sign({ emailAddress }, process.env.JWT_SCERETKEY);
+                    // const token = jwt.sign({ emailAddress }, process.env.JWT_SCERETKEY);
                     // res.cookie('token', token, { httpOnly: true });
                     // const token = jwt.sign({ emailAddress }, process.env.JWT_SCERETKEY);
                     // Cookies.set('token', token, { expires: 7, secure: true });
                     const token = await Admin.generateAuthToken();
                     console.log(token); // This should work properly
-                    
+
                     // Set the token in a cookie
                     res.cookie('auth', token, {
                         expiresIn: new Date(Date.now() + 25892000000),
                         httpOnly: true,
-                        secure:true
+                        secure: true
                     });
-    
+
                     // Send the token back to the client
                     res.json({ message: 'Logged in successfully!', token: token });
                 } catch (error) {
@@ -46,7 +47,7 @@ const adminController = {
             res.status(500).json({ error: 'Internal server error' });
         }
     },
-    
+
 
 
     addAdmin: async (req, res) => {
@@ -78,8 +79,44 @@ const adminController = {
             res.status(500).json({ error: 'Internal server error' });
         }
     },
-    getMyAdmin: async(req,res)=>{
+    getMyAdmin: async (req, res) => {
+        const cookieString = req.headers.auth;
+        console.log('cookie', req.headers.auth)
 
+        const cookies = cookieString.split("; ");
+        let myCookieValue;
+        for (let i = 0; i < cookies.length; i++) {
+            const cookie = cookies[i]
+
+            if (cookie.startsWith("auth=")) {
+                myCookieValue = cookie.split("=")[1];
+                break;
+            }
+        }
+        const adminId = await getUserIdFromToken(myCookieValue, process.env.JWT_SCERETKEY);
+        if (!ObjectId.isValid(adminId)) {
+            return res.status(400).json({ error: 'Invalid Admin id' });
+        }
+
+        try {
+
+            const adminData = await admin.findById(_id = adminId);
+
+            if (!adminData) {
+                return res.status(404).json({ message: 'No record found' });
+            }
+
+            return res.json({
+                adminName: adminData.adminName,
+                password: adminData.password,
+                adminPhoto: adminData.adminPhoto,
+                contact: adminData.contact,
+                emailAddress: adminData.emailAddress
+            });
+        } catch (error) {
+            console.error('Error:', error.message);
+            return res.status(500).json({ message: 'Internal Server Error' });
+        }
     },
     updateAdmin: async (req, res) => {
         try {
