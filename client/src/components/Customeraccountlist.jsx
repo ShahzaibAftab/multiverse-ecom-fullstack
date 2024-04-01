@@ -7,9 +7,6 @@ import { RiDeleteBin6Line } from "react-icons/ri";
 import { useQuery } from 'react-query';
 import { Link } from 'react-router-dom';
 import GetCustomer from '../api/GetCustomer';
-import axios from 'axios';
-import { BASEURL } from '../App';
-import getCookieFromBrowser from '../utils/getCookieFromBrowser';
 
 const Customeraccountlist = () => {
     useEffect(() => {

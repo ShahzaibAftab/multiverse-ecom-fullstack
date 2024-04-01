@@ -21,8 +21,8 @@ import PrivateRoutes from './components/PrivateRoutes';
 import Customerorders from './pages/Customerorders';
 import Customeraccounts from './pages/Customeraccounts';
 
-export const BASEURL = 'http://localhost:5000'
 
+export const BASEURL = 'http://localhost:5000'
 function App() {
   return (
     <>
