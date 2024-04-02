@@ -52,19 +52,29 @@ const Customerorderlist = () => {
     }
 
     const confirmEdit = (orderId) => {
-        setEditedOrder(null);
+
+        // Create an object containing all values to reset
+        const submittedValues = {
+            editedOrder,
+            editedCustomerName,
+            editedContact,
+            editedEmailAddress,
+            editedPostalCode,
+            editedCity,
+            editedProvince,
+            editedAddress,
+            editedPaymentMode,
+            editedTotal,
+            editedProducts,
+        };
+        console.log('id', orderId, 'object', submittedValues);
+
         // Reset all edit fields
-        setEditedCustomerName('');
-        setEditedContact('');
-        setEditedEmailAddress('');
-        setEditedPostalCode('');
-        setEditedCity('');
-        setEditedProvince('');
-        setEditedAddress('');
-        setEditedPaymentMode('');
-        setEditedTotal(0);
-        setEditedProducts([]);
+        // Object.keys(resetValues).forEach(key => {
+        //     eval(`set${key.charAt(0).toUpperCase() + key.slice(1)}(resetValues[key])`);
+        // });
     }
+
     const handleProductChange = (index, key, value) => {
         const newProducts = [...editedProducts];
         newProducts[index][key] = value;
@@ -181,10 +191,7 @@ const Customerorderlist = () => {
                                     <tr>
                                         <td colSpan="12">
                                             <Form>
-                                                <Form.Group controlId="formCustomerName">
-                                                    <Form.Label>Customer Name</Form.Label>
-                                                    <Form.Control type="text" name="customerName" placeholder="Enter customer name" value={editedCustomerName} onChange={handleInputChange} />
-                                                </Form.Group>
+                                                <Form.Control type="text" name="customerName" placeholder="Enter customer name" value={editedCustomerName} onChange={handleInputChange} />
                                                 <Form.Group controlId="formContact">
                                                     <Form.Label>Contact</Form.Label>
                                                     <Form.Control type="text" name="contact" placeholder="Enter contact" value={editedContact} onChange={handleInputChange} />
@@ -193,25 +200,25 @@ const Customerorderlist = () => {
                                                     <Form.Label>Email Address</Form.Label>
                                                     <Form.Control type="email" name="emailAddress" placeholder="Enter email address" value={editedEmailAddress} onChange={handleInputChange} />
                                                 </Form.Group>
-                                                <Form.Group controlId="formpostal">
+                                                <Form.Group controlId="postalCode">
                                                     <Form.Label>Postal</Form.Label>
-                                                    <Form.Control type="number" name="formpostal" placeholder="Enter Postal Code" value={editedPostalCode} onChange={handleInputChange} />
+                                                    <Form.Control type="number" name="postalCode" placeholder="Enter Postal Code" value={editedPostalCode} onChange={handleInputChange} />
                                                 </Form.Group>
-                                                <Form.Group controlId="formcity">
+                                                <Form.Group controlId="city">
                                                     <Form.Label>City</Form.Label>
-                                                    <Form.Control type="text" name="formcity" placeholder="Enter City" value={editedCity} onChange={handleInputChange} />
+                                                    <Form.Control type="text" name="city" placeholder="Enter City" value={editedCity} onChange={handleInputChange} />
                                                 </Form.Group>
-                                                <Form.Group controlId="formprov">
+                                                <Form.Group controlId="province">
                                                     <Form.Label>Province</Form.Label>
-                                                    <Form.Control type="text" name="formprov" value={editedProvince} onChange={handleInputChange} />
+                                                    <Form.Control type="text" name="province" value={editedProvince} onChange={handleInputChange} />
                                                 </Form.Group>
-                                                <Form.Group controlId="formaddr">
+                                                <Form.Group controlId="address">
                                                     <Form.Label>Address</Form.Label>
-                                                    <Form.Control type="text" name="formaddr" value={editedAddress} onChange={handleInputChange} />
+                                                    <Form.Control type="text" name="address" value={editedAddress} onChange={handleInputChange} />
                                                 </Form.Group>
-                                                <Form.Group controlId="formapay">
+                                                <Form.Group controlId="paymentMode">
                                                     <Form.Label>Payment Mode</Form.Label>
-                                                    <Form.Control type="text" name="formapay" value={editedPaymentMode} onChange={handleInputChange} />
+                                                    <Form.Control type="text" name="paymentMode" value={editedPaymentMode} onChange={handleInputChange} />
                                                 </Form.Group>
                                                 <Form.Group controlId="formProducts">
                                                     <Form.Label>Order Items</Form.Label>
@@ -238,9 +245,9 @@ const Customerorderlist = () => {
                                                         </div>
                                                     ))}
                                                 </Form.Group>
-                                                <Form.Group controlId="formtot">
+                                                <Form.Group controlId="total">
                                                     <Form.Label>total</Form.Label>
-                                                    <Form.Control type="number" name="formtot" value={editedTotal} onChange={handleInputChange} />
+                                                    <Form.Control type="number" name="total" value={editedTotal} onChange={handleInputChange} />
                                                 </Form.Group>
                                             </Form>
                                             <div className='d-flex justify-content-around'>
