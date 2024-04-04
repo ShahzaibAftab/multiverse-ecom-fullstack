@@ -6,10 +6,14 @@ import { HiMiniPencilSquare } from "react-icons/hi2";
 import { RiDeleteBin6Line } from "react-icons/ri";
 import { Link } from 'react-router-dom';
 import getOrder from '../api/GetOrder';
-import { useQuery } from 'react-query';
+import { isError, useMutation, useQuery } from 'react-query';
+import PutOrder from '../api/PutOrder';
+import axios from 'axios';
+import { BASEURL } from '../App';
 
 const Customerorderlist = () => {
     const { isLoading, error, data } = useQuery({ queryKey: ['getOrder'], queryFn: getOrder })
+
     const [editedOrder, setEditedOrder] = useState(null);
     const [editedCustomerName, setEditedCustomerName] = useState('');
     const [editedContact, setEditedContact] = useState('');
@@ -22,6 +26,18 @@ const Customerorderlist = () => {
     const [editedTotal, setEditedTotal] = useState(0);
     const [editedProducts, setEditedProducts] = useState([]);
 
+    const mutation = useMutation({
+        mutationFn: async (id, editedValues) => {
+            try {
+                const response = await axios.put(`${BASEURL}/api/order/update-order-detail/${id}`, editedValues);
+                return response.data;
+            } catch (error) {
+                throw new Error(`Error updating order: ${error.message}`);
+            }
+        },
+    });
+    
+   
     const handleEdit = (order) => {
         setEditedOrder(order);
         setEditedCustomerName(order.customerName);
@@ -37,6 +53,7 @@ const Customerorderlist = () => {
     }
 
     const handleCancelEdit = () => {
+
         setEditedOrder(null);
         // Reset all edit fields
         setEditedCustomerName('');
@@ -51,30 +68,44 @@ const Customerorderlist = () => {
         setEditedProducts([]);
     }
 
-    const confirmEdit = (orderId) => {
+    const confirmEdit = async (orderId) => {
 
         // Create an object containing all values to reset
-        const submittedValues = {
-            editedOrder,
-            editedCustomerName,
-            editedContact,
-            editedEmailAddress,
-            editedPostalCode,
-            editedCity,
-            editedProvince,
-            editedAddress,
-            editedPaymentMode,
-            editedTotal,
-            editedProducts,
+        const editedValues = {
+
+            CustomerName: editedCustomerName,
+            Contact: editedContact,
+            EmailAddress: editedEmailAddress,
+            PostalCode: editedPostalCode,
+            City: editedCity,
+            Province: editedProvince,
+            Address: editedAddress,
+            PaymentMode: editedPaymentMode,
+            Total: editedTotal,
+            Products: editedProducts
         };
-        console.log('id', orderId, 'object', submittedValues);
+        console.log('id', orderId, 'object', editedValues);
+
+        try {
+        await mutation.mutate(orderId, editedValues);
+         
+        } catch (error) {
+            console.error('Error Editing Info:', error);
+        }
 
         // Reset all edit fields
         // Object.keys(resetValues).forEach(key => {
         //     eval(`set${key.charAt(0).toUpperCase() + key.slice(1)}(resetValues[key])`);
         // });
     }
-
+if(mutation.data)
+{
+    console.log('success',mutation.data)
+}
+if(mutation.isError)
+{
+    console.log(isError)
+}
     const handleProductChange = (index, key, value) => {
         const newProducts = [...editedProducts];
         newProducts[index][key] = value;
@@ -182,7 +213,7 @@ const Customerorderlist = () => {
                                     </td>
                                     <td className='d-flex flex-column' >
                                         <Button className='p-1 px-2 m-0 mt-3'><FaEye /></Button>
-                                        <Button className='p-1 px-2 m-0 mt-1' onClick={() => handleEdit(order)}><HiMiniPencilSquare /></Button>
+                                        <Button className='p-1 px-2 m-0 mt-1' onClick={()=>handleEdit(order)}><HiMiniPencilSquare /></Button>
                                         <Button className='btn btn-danger p-1 px-2 m-0 mt-1 mb-3'><RiDeleteBin6Line /></Button>
                                     </td>
                                 </tr>
@@ -252,7 +283,7 @@ const Customerorderlist = () => {
                                             </Form>
                                             <div className='d-flex justify-content-around'>
                                                 <Button className='p-1 px-2 m-0 mt-3 btn btn-danger' onClick={handleCancelEdit}>Cancel</Button>
-                                                <Button className='p-1 px-2 m-0 mt-1 btn btn-success' onClick={() => confirmEdit(order._id)}>Confirm</Button>
+                                                <Button className='p-1 px-2 m-0 mt-1 btn btn-success' onClick={()=>confirmEdit(order._id)}>Confirm</Button>
                                             </div>
                                         </td>
                                     </tr>
