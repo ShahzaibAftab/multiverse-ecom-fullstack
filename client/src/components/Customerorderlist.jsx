@@ -8,10 +8,28 @@ import { Link } from 'react-router-dom';
 import getOrder from '../api/GetOrder';
 import { isError, useMutation, useQuery } from 'react-query';
 import PutOrder from '../api/PutOrder';
-import axios from 'axios';
-import { BASEURL } from '../App';
-
+import Modal from 'react-bootstrap/Modal';
+import DeleteOrder from '../api/DeleteOrder';
 const Customerorderlist = () => {
+
+    const mutation = useMutation({
+        mutationFn: async (editedValues) => {
+            try {
+                const { id, ...editedValuesWithoutId } = editedValues; //remove id
+                const res = await PutOrder(id, editedValuesWithoutId)
+                return res;
+            } catch (error) {
+                throw new Error(`Error updating order: ${error.message}`);
+            }
+        },
+    });
+
+    const deleteMutation = useMutation(
+        (id) => {
+            DeleteOrder(id)
+        }
+    )
+
     const { isLoading, error, data } = useQuery({ queryKey: ['getOrder'], queryFn: getOrder })
 
     const [editedOrder, setEditedOrder] = useState(null);
@@ -26,18 +44,13 @@ const Customerorderlist = () => {
     const [editedTotal, setEditedTotal] = useState(0);
     const [editedProducts, setEditedProducts] = useState([]);
 
-    const mutation = useMutation({
-        mutationFn: async (id, editedValues) => {
-            try {
-                const response = await axios.put(`${BASEURL}/api/order/update-order-detail/${id}`, editedValues);
-                return response.data;
-            } catch (error) {
-                throw new Error(`Error updating order: ${error.message}`);
-            }
-        },
-    });
-    
-   
+    const [show, setShow] = useState(false);
+
+    const handleClose = () => setShow(false);
+    const handleShow = () => setShow(true);
+
+    const [deleteId, setdeleteId] = useState(null)
+
     const handleEdit = (order) => {
         setEditedOrder(order);
         setEditedCustomerName(order.customerName);
@@ -70,42 +83,49 @@ const Customerorderlist = () => {
 
     const confirmEdit = async (orderId) => {
 
-        // Create an object containing all values to reset
         const editedValues = {
-
-            CustomerName: editedCustomerName,
-            Contact: editedContact,
-            EmailAddress: editedEmailAddress,
-            PostalCode: editedPostalCode,
-            City: editedCity,
-            Province: editedProvince,
-            Address: editedAddress,
-            PaymentMode: editedPaymentMode,
-            Total: editedTotal,
-            Products: editedProducts
-        };
-        console.log('id', orderId, 'object', editedValues);
+            id: orderId,
+            customerName: editedCustomerName,
+            contact: editedContact,
+            emailAddress: editedEmailAddress,
+            postalCode: editedPostalCode,
+            city: editedCity,
+            province: editedProvince,
+            address: editedAddress,
+            paymentMode: editedPaymentMode,
+            total: editedTotal,
+            products: editedProducts
+        }
 
         try {
-        await mutation.mutate(orderId, editedValues);
-         
+            console.log('evalues', editedValues)
+            await mutation.mutate(editedValues);
         } catch (error) {
             console.error('Error Editing Info:', error);
         }
-
         // Reset all edit fields
-        // Object.keys(resetValues).forEach(key => {
-        //     eval(`set${key.charAt(0).toUpperCase() + key.slice(1)}(resetValues[key])`);
-        // });
+        handleCancelEdit()
     }
-if(mutation.data)
-{
-    console.log('success',mutation.data)
-}
-if(mutation.isError)
-{
-    console.log(isError)
-}
+    if (mutation.isSuccess) {
+        alert('successful')
+    }
+    if (mutation.isError) {
+        alert('failed')
+    }
+
+    const handleDeleteButton = (id) => {
+        handleShow()
+        setdeleteId(id)
+    }
+
+    const confirmDeleteOrder = async () => {
+
+        try {
+            await deleteMutation(deleteId)
+        } catch (error) {
+            console.log('error', error)
+        }
+    }
     const handleProductChange = (index, key, value) => {
         const newProducts = [...editedProducts];
         newProducts[index][key] = value;
@@ -213,8 +233,8 @@ if(mutation.isError)
                                     </td>
                                     <td className='d-flex flex-column' >
                                         <Button className='p-1 px-2 m-0 mt-3'><FaEye /></Button>
-                                        <Button className='p-1 px-2 m-0 mt-1' onClick={()=>handleEdit(order)}><HiMiniPencilSquare /></Button>
-                                        <Button className='btn btn-danger p-1 px-2 m-0 mt-1 mb-3'><RiDeleteBin6Line /></Button>
+                                        <Button className='p-1 px-2 m-0 mt-1' onClick={() => handleEdit(order)}><HiMiniPencilSquare /></Button>
+                                        <Button className='btn btn-danger p-1 px-2 m-0 mt-1 mb-3' onClick={() => handleDeleteButton(order.id)}><RiDeleteBin6Line /></Button>
                                     </td>
                                 </tr>
                                 {/* edit functionality*/}
@@ -283,7 +303,7 @@ if(mutation.isError)
                                             </Form>
                                             <div className='d-flex justify-content-around'>
                                                 <Button className='p-1 px-2 m-0 mt-3 btn btn-danger' onClick={handleCancelEdit}>Cancel</Button>
-                                                <Button className='p-1 px-2 m-0 mt-1 btn btn-success' onClick={()=>confirmEdit(order._id)}>Confirm</Button>
+                                                <Button className='p-1 px-2 m-0 mt-1 btn btn-success' onClick={() => confirmEdit(order._id)}>Confirm</Button>
                                             </div>
                                         </td>
                                     </tr>
@@ -293,6 +313,22 @@ if(mutation.isError)
                     </tbody>
                 </Table>
             </div>
+
+            {/* confirm modal */}
+            <Modal show={show} onHide={handleClose}>
+                <Modal.Header closeButton>
+                    <Modal.Title>Delete Order Receipt</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>Are you sure? Order and its data would be deleted</Modal.Body>
+                <Modal.Footer>
+                    <Button variant="secondary" onClick={handleClose}>
+                        Cancel
+                    </Button>
+                    <Button variant="primary" onClick={confirmDeleteOrder}>
+                        Confirm
+                    </Button>
+                </Modal.Footer>
+            </Modal>
         </>
     )
 }
