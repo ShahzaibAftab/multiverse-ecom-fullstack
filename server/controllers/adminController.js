@@ -107,6 +107,7 @@ const adminController = {
             }
 
             return res.json({
+                _id: adminData._id,
                 adminName: adminData.adminName,
                 password: adminData.password,
                 adminPhoto: adminData.adminPhoto,

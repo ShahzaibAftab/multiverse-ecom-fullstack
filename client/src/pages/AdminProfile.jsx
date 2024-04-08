@@ -1,18 +1,111 @@
-import React from 'react'
+import React, { useState } from 'react'
 import AdminCanvas from '../components/AdminCanvas'
-import { useQuery } from 'react-query';
+import { useMutation, useQuery } from 'react-query';
 import GetAdmin from '../api/GetAdmin';
-import { Spinner } from 'react-bootstrap';
+import { Spinner, Modal, Button, Form } from 'react-bootstrap';
+import axiosInstance from '../utils/AxiosInstance';
 
 const AdminProfile = () => {
     const { isLoading, error, data } = useQuery(['getCurrentAdmin'], GetAdmin);
 
+    const [show, setShow] = useState(false);
+    const handleClose = () => setShow(false);
+    const handleShow = () => setShow(true);
+
+    const [editProfile, seteditProfile] = useState()
+    const [adminId, setadminId] = useState(null)
+
+    console.log(data)
+
+    const editData = (data) => {
+        setadminId(data._id)
+        seteditProfile(data)
+        handleShow()
+    }
+    const handleSaveEdit = async () => {
+        try {
+            await mutation.mutate(editProfile)
+
+        } catch (error) {
+
+        }
+        handleClose()
+
+    }
+
+    const handleCloseEditModal = () => {
+        handleClose()
+        seteditProfile(null)
+    }
+    const mutation = useMutation({
+        mutationFn: async (editedValues) => {
+            try {
+                const res = await axiosInstance.put(`/api/admin-update-admin-info/${adminId}`, editedValues)
+                return res.data;
+            } catch (error) {
+                throw new Error(`Error updating order: ${error.message}`);
+            }
+        },
+    });
+    if (mutation.isSuccess) {
+        console.log('success')
+    }
+    if (mutation.isError) {
+        console.log('error', error)
+    }
     return (
         <>
+            <Modal show={show} onHide={handleClose}>
+                <Modal.Header closeButton>
+                    <Modal.Title>Edit Product</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                    {/* Add form fields here for editing */}
+                    {editProfile && (
+                        <>
+                            <Form.Group controlId="editProfileName">
+                                <Form.Label> Name</Form.Label>
+                                <Form.Control
+                                    type="text"
+                                    value={editProfile.adminName}
+                                    onChange={(e) => seteditProfile({ ...editProfile, adminName: e.target.value })}
+                                />
+                            </Form.Group>
+
+                            <Form.Group controlId="editPrice">
+                                <Form.Label>Email Address</Form.Label>
+                                <Form.Control type="text" value={editProfile.emailAddress} onChange={(e) => seteditProfile({ ...editProfile, emailAddress: e.target.value })} />
+                            </Form.Group>
+                            <Form.Group controlId="editRating">
+                                <Form.Label>Contact</Form.Label>
+                                <Form.Control type="number" value={editProfile.contact} onChange={(e) => seteditProfile({ ...editProfile, contact: e.target.value })} />
+                            </Form.Group>
+
+                            <Form.Group>
+                                <Form.Label className='mx-3'>Profile Image</Form.Label>
+                                <Form.Control type="file" onChange={(e) => seteditProfile({ ...editProfile, adminPhoto: e.target.files[0] })} />
+                            </Form.Group>
+
+                            {/* Add more fields as needed */}
+                        </>
+                    )}
+                </Modal.Body>
+                <Modal.Footer>
+                    <Button variant="secondary" onClick={handleCloseEditModal}>
+                        Close
+                    </Button>
+                    <Button variant="primary" onClick={handleSaveEdit}>
+                        Save Changes
+                    </Button>
+                </Modal.Footer>
+            </Modal>
             <div className='addFlex'>
                 <AdminCanvas />
                 {
                     isLoading && <div className='d-flex justify-content-center vh-100'><Spinner></Spinner></div>
+                }
+                {
+                    error && <div className='d-flex justify-content-center text-muted'>Error Fetching data from the server</div>
                 }
                 {
                     data &&
@@ -37,7 +130,7 @@ const AdminProfile = () => {
                                             <h5 className="my-3">{data.adminName}</h5>
                                             <p className='text-muted'> Administrator</p>
                                             <div className="d-flex justify-content-center mb-2">
-                                                <button type="button" className="btn btn-outline-primary ms-1">Edit Profile</button>
+                                                <button type="button" className="btn btn-outline-primary ms-1" onClick={() => editData(data)}>Edit Profile</button>
                                             </div>
                                         </div>
                                     </div>
