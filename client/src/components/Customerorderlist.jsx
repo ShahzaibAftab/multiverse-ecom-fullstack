@@ -1,17 +1,23 @@
 import React, { useState } from 'react';
 import Topbar from './Topbar';
+import { toast } from 'react-toastify';
 import { Form, InputGroup, Button, Table, Spinner } from 'react-bootstrap';
-import { FaEye } from "react-icons/fa";
+
 import { HiMiniPencilSquare } from "react-icons/hi2";
 import { RiDeleteBin6Line } from "react-icons/ri";
 import { Link } from 'react-router-dom';
 import getOrder from '../api/GetOrder';
-import { isError, useMutation, useQuery } from 'react-query';
+import { useMutation, useQuery, useQueryClient } from 'react-query';
 import PutOrder from '../api/PutOrder';
 import Modal from 'react-bootstrap/Modal';
 import DeleteOrder from '../api/DeleteOrder';
 const Customerorderlist = () => {
+    const queryClient = useQueryClient()
 
+    const notifyUpdate = () => toast.success("Order Updated Successfully");
+    const notifyError = () => toast.error("Error Updating Records");
+    const notifyDelete = () => toast.error("Error Deleting Records");
+   
     const mutation = useMutation({
         mutationFn: async (editedValues) => {
             try {
@@ -22,13 +28,35 @@ const Customerorderlist = () => {
                 throw new Error(`Error updating order: ${error.message}`);
             }
         },
+        onSuccess: () => {
+            notifyUpdate()
+            queryClient.invalidateQueries({ queryKey: ['getOrder'] });
+        },
+        onError: () => {
+            notifyError()
+        },
+
     });
 
-    const deleteMutation = useMutation(
-        (id) => {
-            DeleteOrder(id)
-        }
-    )
+    const deleteMutation = useMutation({
+        mutationFn: async (deleteId) => {
+            try {
+                console.log('in mut'.deleteId)
+                const result = await DeleteOrder(deleteId);
+                return result;
+            } catch (error) {
+                throw new Error(`Error deleting order: ${error.message}`);
+            }
+        },
+        onSuccess: () => {
+            notifyUpdate();
+            queryClient.invalidateQueries({ queryKey: ['getOrder'] });
+        },
+        onError: () => {
+            notifyError();
+        },
+    });
+
 
     const { isLoading, error, data } = useQuery({ queryKey: ['getOrder'], queryFn: getOrder })
 
@@ -49,7 +77,7 @@ const Customerorderlist = () => {
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
 
-    const [deleteId, setdeleteId] = useState(null)
+    const [deleteId, setdeleteId] = useState(undefined)
 
     const handleEdit = (order) => {
         setEditedOrder(order);
@@ -106,26 +134,24 @@ const Customerorderlist = () => {
         // Reset all edit fields
         handleCancelEdit()
     }
-    if (mutation.isSuccess) {
-        alert('successful')
-    }
-    if (mutation.isError) {
-        alert('failed')
-    }
+
 
     const handleDeleteButton = (id) => {
         handleShow()
+        console.log('hd func', id)
         setdeleteId(id)
     }
 
     const confirmDeleteOrder = async () => {
-
         try {
-            await deleteMutation(deleteId)
+            console.log('co', deleteId)
+            await deleteMutation.mutate(deleteId);
         } catch (error) {
-            console.log('error', error)
+            console.log('error', error);
         }
+        handleClose()
     }
+
     const handleProductChange = (index, key, value) => {
         const newProducts = [...editedProducts];
         newProducts[index][key] = value;
@@ -232,9 +258,8 @@ const Customerorderlist = () => {
                                         ))}
                                     </td>
                                     <td className='d-flex flex-column' >
-                                        <Button className='p-1 px-2 m-0 mt-3'><FaEye /></Button>
                                         <Button className='p-1 px-2 m-0 mt-1' onClick={() => handleEdit(order)}><HiMiniPencilSquare /></Button>
-                                        <Button className='btn btn-danger p-1 px-2 m-0 mt-1 mb-3' onClick={() => handleDeleteButton(order.id)}><RiDeleteBin6Line /></Button>
+                                        <Button className='btn btn-danger p-1 px-2 m-0 mt-1 mb-3' onClick={() => handleDeleteButton(order._id)}><RiDeleteBin6Line /></Button>
                                     </td>
                                 </tr>
                                 {/* edit functionality*/}

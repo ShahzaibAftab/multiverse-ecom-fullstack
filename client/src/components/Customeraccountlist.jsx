@@ -1,15 +1,25 @@
 import React, { useState } from 'react';
+import { toast } from 'react-toastify';
 import Topbar from './Topbar';
 import { Form, InputGroup, Button, Table, Spinner, Modal } from 'react-bootstrap';
 import { FaEye } from "react-icons/fa";
 import { HiMiniPencilSquare } from "react-icons/hi2";
 import { RiDeleteBin6Line } from "react-icons/ri";
-import { useMutation, useQuery } from 'react-query';
+import { useMutation, useQuery, useQueryClient } from 'react-query';
 import { Link } from 'react-router-dom';
 import GetCustomer from '../api/GetCustomer';
 import PutCustomer from '../api/PutCustomer';
+import DeleteCustomer from '../api/DeleteCustomer';
 
 const Customeraccountlist = () => {
+
+    const queryClient = useQueryClient()
+
+    const notifyUpdate = () => toast.success("Customer account Updated Successfully");
+    const notifyError = () => toast.error("Error Updating Records");
+    const notifyDelete = () => toast.error("Error Deleting Records");
+
+
     const [show, setShow] = useState(false);
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
@@ -18,7 +28,7 @@ const Customeraccountlist = () => {
     const handleClose2 = () => setShow2(false);
     const handleShow2 = () => setShow2(true);
 
-    const [deleteCustomer, setDeleteCustomer] = useState()
+    const [deleteCustomerId, setDeleteCustomer] = useState()
     const [editedCustomer, setEditedCustomer] = useState(null);
 
     const mutation = useMutation({
@@ -31,8 +41,37 @@ const Customeraccountlist = () => {
                 throw new Error(`Error updating order: ${error.message}`);
             }
         },
+        onSuccess: () => {
+            notifyUpdate();
+            queryClient.invalidateQueries({ queryKey: ['getCustomerInfo'] });
+            handleClose()
+        },
+        onError: () => {
+            notifyError();
+        },
     });
+
     const { isLoading, error, data } = useQuery(['getCustomerInfo'], GetCustomer);
+
+    const deleteMutation = useMutation({
+        mutationFn: async (deleteId) => {
+            try {
+
+                const result = await DeleteCustomer(deleteId);
+                return result;
+            } catch (error) {
+                throw new Error(`Error deleting order: ${error.message}`);
+            }
+        },
+        onSuccess: () => {
+            notifyUpdate();
+            queryClient.invalidateQueries({ queryKey: ['getCustomerInfo'] });
+            handleClose2()
+        },
+        onError: () => {
+            notifyError();
+        },
+    });
 
     const handleEdit = (customer) => {
         setEditedCustomer(customer);
@@ -58,10 +97,6 @@ const Customeraccountlist = () => {
         }
         handleClose();
     };
-    if (mutation.isSuccess) {
-        alert('success')
-        return;
-    }
 
     if (isLoading) {
         return <div className='d-flex justify-content-center align-center vh-100'> <Spinner animation="border" role="status"></Spinner></div>;
@@ -76,8 +111,12 @@ const Customeraccountlist = () => {
         setDeleteCustomer(id)
         console.log('id', id)
     }
-    const confirmDeleteOrder = () => {
-        console.log('confirmDeleteOrder called')
+    const confirmDeleteOrder = async () => {
+        try {
+            await deleteMutation.mutate(deleteCustomerId)
+        } catch (error) {
+
+        }
     }
     return (
         <>

@@ -1,3 +1,5 @@
+import { ToastContainer, toast } from 'react-toastify';
+import '../node_modules/react-toastify/dist/ReactToastify.css';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
@@ -27,6 +29,7 @@ export const BASEURL = 'http://localhost:5000'
 function App() {
   return (
     <>
+      <ToastContainer />
       <Router>
         <Routes>
           <Route path='/' element={<Homepage />} />

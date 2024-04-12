@@ -1,11 +1,14 @@
 import React, { useState } from 'react'
 import AdminCanvas from '../components/AdminCanvas'
-import { useMutation, useQuery } from 'react-query';
+import { QueryClient, useMutation, useQuery, useQueryClient } from 'react-query';
 import GetAdmin from '../api/GetAdmin';
 import { Spinner, Modal, Button, Form } from 'react-bootstrap';
 import axiosInstance from '../utils/AxiosInstance';
+import {  toast } from 'react-toastify';
 
 const AdminProfile = () => {
+
+    const queryClient = useQueryClient()
     const { isLoading, error, data } = useQuery(['getCurrentAdmin'], GetAdmin);
 
     const [show, setShow] = useState(false);
@@ -15,8 +18,9 @@ const AdminProfile = () => {
     const [editProfile, seteditProfile] = useState()
     const [adminId, setadminId] = useState(null)
 
-    console.log(data)
-
+    const notifyUpdate = () => toast.success("Updated Successfully");
+    const notifyError = () => toast.error("Error Updating Records");
+ 
     const editData = (data) => {
         setadminId(data._id)
         seteditProfile(data)
@@ -27,7 +31,7 @@ const AdminProfile = () => {
             await mutation.mutate(editProfile)
 
         } catch (error) {
-
+            console.log(error)
         }
         handleClose()
 
@@ -40,19 +44,22 @@ const AdminProfile = () => {
     const mutation = useMutation({
         mutationFn: async (editedValues) => {
             try {
-                const res = await axiosInstance.put(`/api/admin-update-admin-info/${adminId}`, editedValues)
+                const res = await axiosInstance.put(`/api/admin-update-admin-info/${adminId}`, editedValues);
                 return res.data;
             } catch (error) {
                 throw new Error(`Error updating order: ${error.message}`);
             }
         },
+        onSuccess: () => {
+            notifyUpdate();
+            queryClient.invalidateQueries({ queryKey: ['getCurrentAdmin'] });
+        },
+        onError: () => {
+            notifyError();
+        },
+
     });
-    if (mutation.isSuccess) {
-        console.log('success')
-    }
-    if (mutation.isError) {
-        console.log('error', error)
-    }
+
     return (
         <>
             <Modal show={show} onHide={handleClose}>

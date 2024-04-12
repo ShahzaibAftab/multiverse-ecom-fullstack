@@ -1,15 +1,26 @@
 import React, { useState } from 'react';
+import { toast } from 'react-toastify';
 import Topbar from './Topbar';
 import { Form, InputGroup, Button, Table, Spinner, Modal } from 'react-bootstrap';
 import { FaEye } from "react-icons/fa";
 import { HiMiniPencilSquare } from "react-icons/hi2";
 import { RiDeleteBin6Line } from "react-icons/ri";
-import { useMutation, useQuery } from 'react-query';
+import { useMutation, useQuery, useQueryClient } from 'react-query';
 import getProduct from '../api/GetProduct';
 import { Link } from 'react-router-dom';
 import axiosInstance from '../utils/AxiosInstance';
+import DeleteProduct from '../api/DeleteProduct';
 
 const AdminProductView = () => {
+
+
+    const queryClient = useQueryClient()
+
+    const notifyUpdate = () => toast.success("Product Updated Successfully");
+    const notifyError = () => toast.error("Error Updating Records");
+    const notifyDelete = () => toast.error("Error Deleting Records");
+    const notifyDeleteSuccess = () => toast.error("Product Deleted Successfully");
+
 
     const [show2, setShow2] = useState(false);
     const handleClose2 = () => setShow2(false);
@@ -30,8 +41,34 @@ const AdminProductView = () => {
                 throw new Error(`Error updating order: ${error.message}`);
             }
         },
+        onSuccess: () => {
+            notifyUpdate();
+            queryClient.invalidateQueries({ queryKey: ['todos'] });
+            handleClose2()
+        },
+        onError: () => {
+            notifyError();
+        },
     });
-    
+    const deleteMutation = useMutation({
+        mutationFn: async (deleteId) => {
+            try {
+
+                const result = await DeleteProduct(deleteId);
+                return result;
+            } catch (error) {
+                throw new Error(`Error deleting order: ${error.message}`);
+            }
+        },
+        onSuccess: () => {
+            notifyDeleteSuccess();
+            queryClient.invalidateQueries({ queryKey: ['todos'] });
+            handleClose2()
+        },
+        onError: () => {
+            notifyError();
+        },
+    });
     const handleEdit = (product) => {
         setproductId(product._id)
         setEditProduct(product);
@@ -67,7 +104,12 @@ const AdminProductView = () => {
         setproductId(id)
         handleShow2()
     }
-    const confirmDeleteOrder = () => {
+    const confirmDeleteOrder = async () => {
+        try {
+            await deleteMutation.mutate(productId)
+        } catch (error) {
+            console.log('error', error)
+        }
         handleClose2()
     }
     if (isLoading) {
@@ -79,13 +121,7 @@ const AdminProductView = () => {
     if (error) {
         return <div>Error fetching data: {error.message}</div>;
     }
-    if (mutation.isSuccess) {
-        console.log('success')
 
-    }
-    if (mutation.isError) {
-        console.log('error updating', error)
-    }
     return (
         <>
             <div className='m-1 pt-3 p-5 bg-info' style={{ maxHeight: '630px', minWidth: '80%', overflowY: 'scroll' }}>
