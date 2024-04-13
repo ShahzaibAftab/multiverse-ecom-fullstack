@@ -1,11 +1,12 @@
 import React from 'react';
 import { Button, NavDropdown, Navbar, Form, Nav, FormControl } from 'react-bootstrap';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { IoIosLogOut } from "react-icons/io";
 import Cart from './Cart';
 import logo from '../components/images/logo.png'
 import { FaShoppingCart } from 'react-icons/fa';
 const Header = () => {
+    const navigate=useNavigate()
     return (
         // <>
         //     <Navbar collapseOnSelect expand="lg" bg="light" variant="light">
@@ -54,7 +55,7 @@ const Header = () => {
             <Navbar.Toggle aria-controls="basic-navbar-nav" />
             <Navbar.Collapse id="basic-navbar-nav">
                 <Nav className='mr-auto'>
-                    <Nav.Link>Homepage</Nav.Link>
+                    <Nav.Link>Home</Nav.Link>
                     <Nav.Link>Shop</Nav.Link>
                     <Nav.Link >Contact</Nav.Link>
                 </Nav>
@@ -64,7 +65,8 @@ const Header = () => {
                 </Form>
                 <Nav>
                     <Nav.Link><Cart /></Nav.Link>
-                    <Nav.Link to="/checkout">  Checkout <IoIosLogOut /></Nav.Link>
+                    <Nav.Link onClick={()=>navigate('/checkout')}>  Checkout <IoIosLogOut />
+                    </Nav.Link>
                 </Nav>
             </Navbar.Collapse>
         </Navbar>

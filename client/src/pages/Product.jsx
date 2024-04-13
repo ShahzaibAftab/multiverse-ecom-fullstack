@@ -5,10 +5,10 @@ import demo from '../components/images/c1.jpg'
 import Slider from '../components/Slider'
 import ReactStars from 'react-rating-stars-component';
 
-const Product = ({data}) => {
+const Product = ({ data }) => {
     const ratingChanged = (newRating) => {
         console.log(newRating);
-      };
+    };
     return (
         <>
             <Commonheader />
@@ -21,7 +21,8 @@ const Product = ({data}) => {
                     </div>
                     <div className='col-sm-12 col-md-6 mt-5'>
                         <div className='d-flex justify-content-around mr-5'>
-                            <h4>Product Name:</h4><p className='mt-1 fs-5'>{data.productName}</p>
+                            <h4>Product Name:</h4><p className='mt-1 fs-5'>
+                                {data.productName}</p>
                         </div>
                         <div className='d-flex justify-content-around'>
                             <h4>Price:</h4> <p>{data.price}<span className='text-success' style={{ fontWeight: '1000' }}>$</span></p>
@@ -101,11 +102,11 @@ const Product = ({data}) => {
                                         </div>
                                     </div>
                                 </div>
-                                <hr/>
+                                <hr />
                                 <div class="card-body p-4">
                                     <div className='text-center'>
-                                    <h4 class="mb-0">Recent comments</h4>
-                                    <p class="fw-light mb-4 pb-2">Latest Comments</p>
+                                        <h4 class="mb-0">Recent comments</h4>
+                                        <p class="fw-light mb-4 pb-2">Latest Comments</p>
                                     </div>
 
                                     <div class="d-flex flex-start">

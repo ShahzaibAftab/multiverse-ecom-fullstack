@@ -32,6 +32,23 @@ const productController = {
             res.status(500).send({ error: 'Internal server error' });
         }
     },
+    myProduct: async (req, res) => {
+        const id = req._id
+        if (!ObjectId.isValid(id)) {
+            return res.status(400).json({ error: 'Invalid Admin id' });
+        }
+
+        try {
+            const Data = await product.findById(id);
+            if (!Data) {
+                return res.status(404).json({ message: 'No record found' });
+            }
+            return res.json({ Data });
+        } catch (error) {
+            console.error('Error:', error.message);
+            return res.status(500).json({ message: 'Internal Server Error' });
+        }
+    },
     getProduct: async (req, res) => {
         try {
             const rows = await product.find({})

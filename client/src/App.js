@@ -23,6 +23,7 @@ import PrivateRoutes from './components/PrivateRoutes';
 import Customerorders from './pages/Customerorders';
 import Customeraccounts from './pages/Customeraccounts';
 import AdminProfile from './pages/AdminProfile';
+import ShopPage from './pages/ShopPage';
 
 
 export const BASEURL = 'http://localhost:5000'
@@ -33,6 +34,7 @@ function App() {
       <Router>
         <Routes>
           <Route path='/' element={<Homepage />} />
+          <Route path='/shop' element={<ShopPage />} />
           <Route path='/view-product' element={<Product />} />
           <Route path='/contact-us' element={<Header />} />
           <Route path='/checkout' element={<Checkout />} />

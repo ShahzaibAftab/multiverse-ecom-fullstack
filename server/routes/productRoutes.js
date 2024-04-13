@@ -9,6 +9,7 @@ router.get('/product/search-product-by-name/:name', productController.searchProd
 
 router.post('/product/add-product', verifyToken, upload.array('productImg'), productController.addProduct)
 router.get('/product/display-all-products', productController.getProduct)
+router.get('/product/display-products/:id', productController.myProduct)
 router.put('/product/update-product/:id', upload.array('productImg'), verifyToken, productController.updateProduct)
 router.delete('/product/delete-product/:id', verifyToken, productController.deleteProduct)
 

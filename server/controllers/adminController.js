@@ -20,17 +20,13 @@ const adminController = {
                 }
 
                 // Password is correct, generate token here
-                try {
-                    // const token = jwt.sign({ emailAddress }, process.env.JWT_SCERETKEY);
-                    // res.cookie('token', token, { httpOnly: true });
-                    // const token = jwt.sign({ emailAddress }, process.env.JWT_SCERETKEY);
-                    // Cookies.set('token', token, { expires: 7, secure: true });
+                try {                   
                     const token = await Admin.generateAuthToken();
-                    console.log(token); // This should work properly
+                    console.log(token); 
 
                     // Set the token in a cookie
                     res.cookie('auth', token, {
-                        expiresIn: new Date(Date.now() + 25892000000),
+                        expiresIn: new Date(Date.now() + 24 * 60 * 60 * 1000),
                         httpOnly: true,
                         secure: true
                     });

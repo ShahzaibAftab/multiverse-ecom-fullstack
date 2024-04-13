@@ -59,7 +59,7 @@ function Adminsignin() {
 
     if (mutation.isSuccess) {
       const token = mutation.data.data.token
-      document.cookie = `auth=${token};expires=${new Date(Date.now() + 25892000000).toUTCString()};path=/;`;
+      document.cookie = `auth=${token};expires=${new Date(Date.now() + 24 * 60 * 60 * 1000).toUTCString()};path=/;`;
       navigate('/add-Product');
     }
   }, [mutation.isSuccess]);
