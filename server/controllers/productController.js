@@ -33,17 +33,18 @@ const productController = {
         }
     },
     myProduct: async (req, res) => {
-        const id = req._id
-        if (!ObjectId.isValid(id)) {
-            return res.status(400).json({ error: 'Invalid Admin id' });
+        const _id = req.params.id
+        console.log(_id)
+        if (!ObjectId.isValid(_id)) {
+            return res.status(400).json({ error: 'Invalid id' });
         }
 
         try {
-            const Data = await product.findById(id);
+            const Data = await product.findById(_id);
             if (!Data) {
                 return res.status(404).json({ message: 'No record found' });
             }
-            return res.json({ Data });
+            return res.json( Data );
         } catch (error) {
             console.error('Error:', error.message);
             return res.status(500).json({ message: 'Internal Server Error' });

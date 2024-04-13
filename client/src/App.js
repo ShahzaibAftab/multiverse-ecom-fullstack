@@ -35,7 +35,7 @@ function App() {
         <Routes>
           <Route path='/' element={<Homepage />} />
           <Route path='/shop' element={<ShopPage />} />
-          <Route path='/view-product' element={<Product />} />
+          <Route path='/view-product/:id' element={<Product />} />
           <Route path='/contact-us' element={<Header />} />
           <Route path='/checkout' element={<Checkout />} />
           <Route path='/order-confirmed' element={<Orderconfirmed />} />

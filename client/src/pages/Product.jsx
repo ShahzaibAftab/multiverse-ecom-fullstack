@@ -1,37 +1,60 @@
 import React from 'react'
-import { Container } from 'react-bootstrap'
-import Commonheader from '../components/Commonheader'
+import { Container, Spinner } from 'react-bootstrap'
 import demo from '../components/images/c1.jpg'
 import Slider from '../components/Slider'
 import ReactStars from 'react-rating-stars-component';
+import Header from '../components/Header'
+import { useParams } from 'react-router-dom'
+import { useQuery } from 'react-query'
+import GetProductId from '../api/GetProductId'
 
-const Product = ({ data }) => {
+const Product = () => {
+
+    let { id } = useParams();
+
+    const { isLoading, error, data } = useQuery(['GetProductId', id], () => {
+        return GetProductId(id); 
+    });
+    if (isLoading) {
+        return <div className='d-flex justify-content-center align-center vh-100'> <Spinner animation="border" role="status">
+            <span className="sr-only">Loading...</span>
+        </Spinner></div>
+    }
+
+    if (error) {
+        return <div>Error fetching data: {error.message}</div>;
+    }
+    
     const ratingChanged = (newRating) => {
         console.log(newRating);
     };
     return (
         <>
-            <Commonheader />
+            <Header />
             <Container fluid>
                 <div className='row mt-5'>
                     <div className='col-sm-12 col-md-6'>
                         <div className='m-5'>
-                            <Slider prop1={demo} prop2={demo} prop3={demo} control={true} />
+                            <Slider prop1={data.productImg[0].img} prop2={data.productImg[1].img} prop3={data.productImg[2].img} control={true} />
                         </div>
                     </div>
                     <div className='col-sm-12 col-md-6 mt-5'>
                         <div className='d-flex justify-content-around mr-5'>
                             <h4>Product Name:</h4><p className='mt-1 fs-5'>
-                                {data.productName}</p>
+                                {data.productName}
+                            </p>
                         </div>
                         <div className='d-flex justify-content-around'>
-                            <h4>Price:</h4> <p>{data.price}<span className='text-success' style={{ fontWeight: '1000' }}>$</span></p>
+                            <h4>Price:</h4> <p>
+                                {data.price}
+                                <span className='text-success' style={{ fontWeight: '1000' }}>$</span></p>
                         </div>
                         <div className='d-flex justify-content-around'>
                             <h4 className='ml-3'>Overall Rating:</h4>
                             <ReactStars
                                 count={5}
                                 value={data.rating}
+                                
                                 edit={false}
                                 isHalf={true}
                                 halfIcon={<i className="fa fa-star-half-alt"></i>}
@@ -41,9 +64,11 @@ const Product = ({ data }) => {
                             />
                         </div>
                         <div className='d-flex justify-content-around bg-info text-muted round-border mt-5 px-5 py-2'>
-                            <p style={{ textAlign: 'justify' }}><h6 className='ml-5'>Description:</h6>{data.description}</p>
+                            <p style={{ textAlign: 'justify' }}><h6 className='ml-5'>Description:</h6>
+                                {data.description}
+                            </p>
                         </div>
-                        <div class="row">
+                        <div class="row mt-5">
                             <div class="col-md-6 mt-2">
                                 <button class="btn btn-primary w-100 mb-2 mb-md-0">Add to cart</button>
                             </div>

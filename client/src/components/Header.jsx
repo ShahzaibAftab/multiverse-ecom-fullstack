@@ -1,76 +1,121 @@
-import React from 'react';
-import { Button, NavDropdown, Navbar, Form, Nav, FormControl } from 'react-bootstrap';
+import React, { useState } from 'react';
+import {
+    MDBBtn,
+    MDBCard,
+    MDBCardBody,
+    MDBCardImage,
+    MDBCol,
+    MDBContainer,
+    MDBIcon,
+    MDBRow,
+    MDBTypography,
+} from "mdb-react-ui-kit";
+
+import { Button, Navbar, Form, Nav, FormControl } from 'react-bootstrap';
 import { Link, useNavigate } from 'react-router-dom';
 import { IoIosLogOut } from "react-icons/io";
 import Cart from './Cart';
-import logo from '../components/images/logo.png'
-import { FaShoppingCart } from 'react-icons/fa';
+
 const Header = () => {
-    const navigate=useNavigate()
+    const [displayCart, setdisplayCart] = useState(false)
+    const navigate = useNavigate()
+    const showCart = () => {
+        setdisplayCart(true)
+    }
+    const hideCart = () => {
+        setdisplayCart(false)
+    }
     return (
-        // <>
-        //     <Navbar collapseOnSelect expand="lg" bg="light" variant="light">
-        //         <Navbar.Brand href="/">
-        //             <img className='qcom-logo' src={logo} alt='logo' />
-        //         </Navbar.Brand>
-        //         <Navbar.Toggle aria-controls="responsive-navbar-nav" />
-        //         <Navbar.Collapse id="responsive-navbar-nav">
-        //             <Nav className="mx-auto d-flex flex-column justify-content-center align-center pt-5">
-        //                 <Form className="d-flex mb-5" style={{ width: '550px', marginRight: '100px' }}>
-        //                     <FormControl
-        //                         // style={{ width: '550px' }}
-        //                         type="search"
-        //                         className="mr-2"
-        //                         placeholder="mobile phones, tablets, smartwatches..."
-        //                         aria-label="Search"
-        //                     />
-        //                     <Button type='button' variant="outline-success">Search</Button>
-        //                 </Form>
-        //                 <div className='d-flex mx-3'>
-        //                     <NavDropdown title="Categories" id="collasible-nav-dropdown">
-        //                         <NavDropdown.Item href="#action/3.1">Action</NavDropdown.Item>
-        //                         <NavDropdown.Item href="#action/3.2">Another action</NavDropdown.Item>
-        //                         <NavDropdown.Item href="#action/3.3">Something</NavDropdown.Item>
-        //                         <NavDropdown.Divider />
-        //                         <NavDropdown.Item href="#action/3.4">Separated link</NavDropdown.Item>
-        //                     </NavDropdown>
-        //                     <Nav.Link className='mx-4' href="#features">Features</Nav.Link>
-        //                     <Nav.Link className='mx-4' href="#features">World</Nav.Link>
-        //                     <Nav.Link className='mx-4' href="#features">Finest</Nav.Link>
-        //                     <Nav.Link className='mx-4' href="#pricing">Pricing</Nav.Link>
-        //                 </div>
-        //             </Nav>
-        //             <Nav className='mr-4 right-cart-section'>
-        //                 <Nav.Link href="#" className='pr-5'><Cart /></Nav.Link>
-        //                 <Nav.Link className='mt-2' eventKey={2}>
-        //                     <Link to="/checkout">  Checkout <IoIosLogOut /></Link>
-        //                 </Nav.Link>
-        //             </Nav>
-        //         </Navbar.Collapse>
+        <>
+            <Navbar bg="light" expand="lg" className="justify-content-between px-4 shadow" style={{ boxShadow: '0 2px 4px rgba(0,0,0,0.5)' }}>
+                <Navbar.Brand>Logo</Navbar.Brand>
+                <Navbar.Toggle aria-controls="basic-navbar-nav" />
+                <Navbar.Collapse id="basic-navbar-nav">
+                    <Nav className='mr-auto'>
+                        <Nav.Link>Home</Nav.Link>
+                        <Nav.Link>Shop</Nav.Link>
+                        <Nav.Link >Contact</Nav.Link>
+                    </Nav>
+                    <Form inline className='d-flex mx-auto'>
+                        <FormControl type="text" placeholder="Search" className="mr-sm-2" style={{ minWidth: '550px' }} />
+                        <Button variant="outline-success">Search</Button>
+                    </Form>
+                    <Nav>
+                        <Nav.Link onMouseEnter={showCart} onMouseLeave={hideCart}><Cart /></Nav.Link>
+                        <Nav.Link onClick={() => navigate('/checkout')}>  Checkout <IoIosLogOut />
+                        </Nav.Link>
+                    </Nav>
+                </Navbar.Collapse>
+            </Navbar>
 
-        //     </Navbar>
-        // </>
-        <Navbar bg="light" expand="lg" className="justify-content-between px-4 shadow" style={{ boxShadow: '0 2px 4px rgba(0,0,0,0.5)' }}>
-            <Navbar.Brand>Logo</Navbar.Brand>
-            <Navbar.Toggle aria-controls="basic-navbar-nav" />
-            <Navbar.Collapse id="basic-navbar-nav">
-                <Nav className='mr-auto'>
-                    <Nav.Link>Home</Nav.Link>
-                    <Nav.Link>Shop</Nav.Link>
-                    <Nav.Link >Contact</Nav.Link>
-                </Nav>
-                <Form inline className='d-flex mx-auto'>
-                    <FormControl type="text" placeholder="Search" className="mr-sm-2" style={{ minWidth: '550px' }} />
-                    <Button variant="outline-success">Search</Button>
-                </Form>
-                <Nav>
-                    <Nav.Link><Cart /></Nav.Link>
-                    <Nav.Link onClick={()=>navigate('/checkout')}>  Checkout <IoIosLogOut />
-                    </Nav.Link>
-                </Nav>
-            </Navbar.Collapse>
-        </Navbar>
+            {/* CART */}
+            {displayCart && <section className="container-fluid" style={{ position: 'absolute', zIndex: 1000 }}>
+                <MDBContainer className="py-1">
+                    <MDBRow className="justify-content-center justify-content-md-end">
+                        <MDBCol xs="12" md="5" style={{ backgroundColor: '#eee', padding: '10px', borderRadius: '6px' }}>
+                            <div className="d-flex justify-content-between align-items-center mb-4">
+                                <MDBTypography tag="h6" className="fw-normal mb-0 text-black">
+                                    Shopping Cart
+                                </MDBTypography>
+                                <div>
+                                    <p className="mb-0">
+                                        <span className="text-muted">Sort by:</span>
+                                        <a href="#!" className="text-body">
+                                            price <i className="fas fa-angle-down mt-1"></i>
+                                        </a>
+                                    </p>
+                                </div>
+                            </div>
 
+                            <MDBCard className="rounded-3 mb-4 d-flex">
+                                <MDBCardBody className="d-flex p-4">
+                                    <MDBRow className=" d-flex justify-content-between align-items-center">
+                                        <MDBCol className='d-flex justify-content-center' md="3" lg="3" xl="3">
+                                            <MDBCardImage className="rounded-3" fluid style={{ height: '50px', width: '50px' }}
+                                                src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-shopping-carts/img1.webp"
+                                                alt="Cotton T-shirt" />
+                                        </MDBCol>
+                                        <MDBCol className='d-flex justify-content-center' md="3" lg="3" xl="3">
+                                            <p className="small fw-normal mb-2">Basic T-shirt</p>
+
+                                        </MDBCol>
+                                        <MDBCol md="2" lg="2" xl="2"
+                                            className="d-flex align-items-center justify-content-center">
+                                            <MDBBtn color="link" className="px-2 small">
+                                                <MDBIcon fas icon="minus" />
+                                            </MDBBtn>
+                                            <span size="sm" className='text-muted px-1' style={{ border: '1px solid #EEEEEE', borderRadius: '5px' }}>3</span>
+                                            <MDBBtn color="link" className="px-2 small">
+                                                <MDBIcon fas icon="plus" className='small' />
+                                            </MDBBtn>
+                                        </MDBCol>
+
+                                        <MDBCol md="3" lg="2" xl="2" className="offset-lg-1">
+                                            <MDBTypography tag="h5" className="mb-0 small">
+                                                <span className='text-success' style={{ fontWeight: '1000' }}>$</span>499
+                                            </MDBTypography>
+                                        </MDBCol>
+                                        <MDBCol md="1" lg="1" xl="1" className="text-end">
+                                            <a href="#!" className="text-danger">
+                                                <MDBIcon fas icon="trash text-danger" size="lg" />
+                                            </a>
+                                        </MDBCol>
+
+                                    </MDBRow>
+                                </MDBCardBody>
+                            </MDBCard>
+
+                            <div className='d-flex justify-content-end'>
+                                <MDBBtn color="muted" size="sm">
+                                    Checkout <IoIosLogOut />
+                                </MDBBtn>
+                            </div>
+                        </MDBCol>
+                    </MDBRow>
+                </MDBContainer>
+            </section>}
+
+        </>
 
     );
 };

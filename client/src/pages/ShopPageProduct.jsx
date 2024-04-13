@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 import {
 
     MDBCol,
@@ -7,19 +7,17 @@ import {
     MDBCardImage,
 } from "mdb-react-ui-kit";
 import ReactStars from 'react-rating-stars-component';
-import Product from './Product';
 import { useNavigate } from 'react-router-dom';
 const ShopPageProduct = (Props) => {
     const { data } = Props
 
-    const [productData, setProductData] = useState(undefined)
     const navigate = useNavigate()
 
     const gotoCardPage = (data) => {
-        setProductData(data)
-        navigate('/view-product')
-        return < Product data={productData} />
+       
+        navigate(`/view-product/${data._id}`)
     }
+
     function generateRandomNumber() {
         return Math.floor(Math.random() * 50); // Generates a random number between 0 and 49
     }
