@@ -13,6 +13,13 @@ const cartSlice = createSlice({
                 state.push({ ...newItem, quantity: 1 })
             }
         },
+        removeItem: (state, action) => {
+            const itemNameToRemove = action.payload;
+            const itemIndexToRemove = state.findIndex(item => item.name === itemNameToRemove);
+            if (itemIndexToRemove !== -1) {
+                state.splice(itemIndexToRemove, 1);
+            }
+        },
         desQuantity: (state, action) => {
             const newItem = action.payload;
             const existingItemIndex = state.findIndex(item => item.name === newItem.name);
@@ -26,5 +33,5 @@ const cartSlice = createSlice({
         }
     }
 });
-export const { addItem, desQuantity, clearItems } = cartSlice.actions;
+export const { addItem,removeItem, desQuantity, clearItems } = cartSlice.actions;
 export default cartSlice.reducer;
