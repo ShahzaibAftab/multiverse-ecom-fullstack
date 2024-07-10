@@ -2,11 +2,6 @@ import React from "react";
 import {
     MDBContainer,
     MDBRow,
-    MDBCol,
-    MDBCard,
-    MDBCardBody,
-    MDBCardImage,
-    MDBIcon,
 } from "mdb-react-ui-kit";
 import Header from "../components/Header";
 import { useQuery } from "react-query";
@@ -30,15 +25,23 @@ function ShopPage() {
         <>
             <Header />
             <MDBContainer fluid className="my-5 px-5">
-                <MDBRow>
-                {data?.map((dataObj, index) => (
-                    <ShopPageProduct key={index} data={dataObj} />
-                ))}
-                 {console.log(data)}
+                <MDBRow style={styles.container}>
+                    {data?.map((dataObj, index) => (
+                        <ShopPageProduct key={index} data={dataObj} />
+                    ))}
+                    {console.log(data)}
                 </MDBRow>
             </MDBContainer>
         </>
     );
 }
+const styles = {
+    container: {
+        display: 'flex',
+        flexWrap: 'wrap',
+        justifyContent: 'center',
+        gap: '15px',
+    },
+};
 
 export default ShopPage;

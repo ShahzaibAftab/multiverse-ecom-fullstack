@@ -131,21 +131,24 @@ const productController = {
     },
     searchProduct: async (req, res) => {
         try {
+            const searchQuery = req.params.name;
+            // console.log("Search query:", searchQuery); // Debug log
+            
+            // Use case-insensitive search with regular expression
             let result = await product.find({
-                "$or": [
-                    { productName: { $regex: req.params.name } }
-                ]
+                productName: { $regex: new RegExp(searchQuery, "i") } // Case insensitive search
             });
-            if (result.length > 0) { // Check if result has any records
+            
+            if (result.length > 0) {
                 res.send(result);
             } else {
-                res.send({ message: 'no record found!' });
+                res.send({ message: 'No records found!' });
             }
         } catch (error) {
-            // Handle errors here
-            console.error(error);
+            console.error("Error searching products:", error);
             res.status(500).send('Internal Server Error');
         }
     },
+    
 }
 module.exports = productController;
